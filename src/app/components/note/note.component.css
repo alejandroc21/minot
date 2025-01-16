@@ -1,0 +1,72 @@
+.tool-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 2.5rem;
+  border: solid var(--secundary-color);
+  border-width: 0 0 1px;
+}
+
+.tool-bar .view-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.tool-bar .note-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.options:hover .options-menu{
+  display: block;
+  height: 1000px;
+  border-color: aqua;
+}
+
+.options-menu {
+  display: none;
+}
+
+.btn {
+  background-color: var(--background-color);
+  border: none;
+}
+
+.text-editor {
+  height: 88vh;
+  max-width: 100%;
+  font-size: 16px;
+}
+
+.text-editor textarea {
+  height: 99%;
+  width: 100%;
+  padding: 5% 7%;
+  font-size: large;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+.text-editor textarea::selection {
+  background-color: var(--foreground-color);
+  border-radius: 15px;
+}
+
+.tag-list {
+  display: flex;
+  overflow: auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.tag-list input {
+  border: none;
+  outline: none;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+}

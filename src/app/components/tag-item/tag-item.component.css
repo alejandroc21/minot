@@ -1,0 +1,22 @@
+:host{
+    display: flex;
+    width: max-content;
+    padding: 5px 5px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+:host:hover{
+    background-color: var(--secundary-color);
+}
+
+button {
+  background-color: transparent;
+  border: none;
+}
+
+svg:hover{
+    filter: invert(46%) sepia(62%) saturate(2901%) hue-rotate(162deg) brightness(96%) contrast(106%);
+}
