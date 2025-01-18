@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Note } from '@models/note';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, filter, Observable, Subject, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,8 +45,16 @@ export class NoteService {
     return this.http.put<Note>(`${this.apiUrl}/${note.id}`, note);
   }
 
-  deleteNote(noteId: number) {
-    return this.http.delete<string>(`${this.apiUrl}/${noteId}`);
+  deleteNote(note:Note) {
+    return this.http.delete(`${this.apiUrl}/${note.id}`, {
+      responseType: 'text',
+    }).pipe(
+      tap(()=>{
+        this._notes = this._notes.filter((item) => item !== note);
+        this._notes$.next(this._notes)
+        this.selectNote(this._notes[0]);
+      })
+    );
   }
 
   selectNote(note: Note) {

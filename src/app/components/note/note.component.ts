@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   inject,
   Input,
   OnInit,
@@ -38,13 +39,16 @@ export class NoteComponent implements OnInit {
   updatedNote = true;
 
   ngOnInit(): void {
+    this.textControl.disable();
     this.noteService.selectedNote.subscribe({
       next: (res) => {
+        this.textControl.enable();
+        
         this.note = res;
         this.textControl.setValue(res.content);
         this.editor.nativeElement.setSelectionRange(0, 0);
         this.editor.nativeElement.focus();
-      },
+      }
     });
 
     this.textControl.valueChanges
@@ -103,5 +107,11 @@ export class NoteComponent implements OnInit {
         alert('error removing tag');
       },
     });
+  }
+
+  deleteNote(){
+    if(confirm("Sure?")){      
+      this.noteService.deleteNote(this.note).subscribe();
+    }
   }
 }

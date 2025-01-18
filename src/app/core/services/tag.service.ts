@@ -24,11 +24,13 @@ export class TagService {
     return this.http.get<Tag[]>(`${this.apiUrl}/list/${noteId}`);
   }
 
-  createTag(tag: Tag) {    
+  createTag(tag: Tag) {
     return this.http.post<Tag>(`${this.apiUrl}/create`, tag);
   }
 
   deleteTag(tagId: number) {
-    return this.http.delete(`${this.apiUrl}/${tagId}`,{responseType:'text'});
+    return this.http.delete(`${this.apiUrl}/${tagId}`, {
+      responseType: 'text',
+    });
   }
 }

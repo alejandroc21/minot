@@ -1,3 +1,6 @@
+:host{
+  position: relative;
+}
 .tool-bar {
   display: flex;
   align-items: center;
@@ -16,16 +19,6 @@
 .tool-bar .note-options {
   display: flex;
   gap: 1rem;
-}
-
-.options:hover .options-menu{
-  display: block;
-  height: 1000px;
-  border-color: aqua;
-}
-
-.options-menu {
-  display: none;
 }
 
 .btn {
@@ -69,4 +62,12 @@
   outline: none;
   background-color: var(--background-color);
   color: var(--primary-color);
+}
+
+.empty-note{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color: var(--foreground-color)
 }
