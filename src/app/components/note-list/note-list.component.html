@@ -13,7 +13,7 @@
 
 <div class="note-list">
     @for (note of notes$ | async; track note.id) {
-        <div class="note" [class.selected]="note === selectedNote" (click)="selectNote(note)">
+        <div class="note" [class.selected]="note.id === selectedNote.id" (click)="selectNote(note)">
             <app-note-item [note]="note"/>
         </div>
     }

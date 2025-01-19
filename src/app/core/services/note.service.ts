@@ -42,7 +42,7 @@ export class NoteService {
   }
 
   updateNote(note: Note): Observable<Note> {
-    return this.http.put<Note>(`${this.apiUrl}/${note.id}`, note);
+    return this.http.put<Note>(`${this.apiUrl}/${note.id}`, note).pipe(tap((res:Note)=>this.selectNote(res)));
   }
 
   deleteNote(note:Note) {

@@ -2,7 +2,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   inject,
   Input,
   OnInit,
@@ -13,7 +12,7 @@ import { NoteService } from '@services/note.service';
 import { TagService } from '@services/tag.service';
 import { Note } from '@models/note';
 import { Tag } from '@models/tag';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { TagItemComponent } from '../tag-item/tag-item.component';
@@ -21,7 +20,7 @@ import { TagItemComponent } from '../tag-item/tag-item.component';
 @Component({
   selector: 'app-note',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TagItemComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TagItemComponent, DatePipe],
   templateUrl: './note.component.html',
   styleUrl: './note.component.css',
 })
@@ -34,7 +33,7 @@ export class NoteComponent implements OnInit {
   private readonly noteService = inject(NoteService);
   private readonly tagService = inject(TagService);
 
-  note: Note = {content:''};
+  note: Note = {};
   textControl = new FormControl();
   updatedNote = true;
   showDeleteModal = false;
@@ -44,12 +43,13 @@ export class NoteComponent implements OnInit {
     this.textControl.disable();
     this.noteService.selectedNote.subscribe({
       next: (res) => {
-        this.textControl.enable();
-        
+        this.textControl.enable({emitEvent:false});
+        this.textControl.setValue(res.content,{emitEvent:false});
+        if(this.note.id !== res.id){
+          this.editor.nativeElement.setSelectionRange(0, 0);
+          this.editor.nativeElement.focus();
+        }
         this.note = res;
-        this.textControl.setValue(res.content);
-        this.editor.nativeElement.setSelectionRange(0, 0);
-        this.editor.nativeElement.focus();
       }
     });
 
@@ -59,8 +59,9 @@ export class NoteComponent implements OnInit {
         this.note.content = value;
         this.noteService.updateNote(this.note).subscribe({
           error: () => (this.updatedNote = false),
-        });
+        });                
       });
+
   }
 
   onToggleAside() {
@@ -123,7 +124,7 @@ export class NoteComponent implements OnInit {
     });
   }
 
-  openInfoModal(){
+  openInfoModal(){    
     this.showInfoModal = true;
   }
 

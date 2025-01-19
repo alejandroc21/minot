@@ -62,11 +62,11 @@
     <div class="modal info-modal" (click)="clickOutside($event)">
      <div class="item">
       <span class="info-item">Modified</span>
-      <span class="info-detail">{{note.modifiedDate || '???'}}</span>
+      <span class="info-detail">{{(note.modifiedDate | date:'d/M/yy, h:mm a') || '???'}} </span>
      </div>
      <div class="item">
       <span class="info-item">Created</span>
-      <span class="info-detail">{{note.creationDate || '???'}}</span>
+      <span class="info-detail">{{(note.creationDate | date:'d/M/yy, h:mm a') || '???'}}</span>
      </div>
      <div class="item">
       <span class="info-item">Words</span>
