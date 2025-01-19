@@ -34,9 +34,11 @@ export class NoteComponent implements OnInit {
   private readonly noteService = inject(NoteService);
   private readonly tagService = inject(TagService);
 
-  note: Note = {};
+  note: Note = {content:''};
   textControl = new FormControl();
   updatedNote = true;
+  showDeleteModal = false;
+  showInfoModal = false;
 
   ngOnInit(): void {
     this.textControl.disable();
@@ -109,9 +111,36 @@ export class NoteComponent implements OnInit {
     });
   }
 
+  openDeleteModal(){
+    this.showDeleteModal = true;
+  }
+
   deleteNote(){
-    if(confirm("Sure?")){      
-      this.noteService.deleteNote(this.note).subscribe();
-    }
+    this.noteService.deleteNote(this.note).subscribe({
+      next:()=>{
+        this.showDeleteModal = false;
+      }
+    });
+  }
+
+  openInfoModal(){
+    this.showInfoModal = true;
+  }
+
+  clickOutside(event:Event){
+    event.stopPropagation();    
+  }
+
+  closeModals(){
+    this.showDeleteModal = false;
+    this.showInfoModal = false;
+  }
+
+  get wordCount(){
+    return this.note.content?.trim().split(/\s+/).length || 0;
+  }
+
+  get characterCount(){
+    return this.note.content?.length || 0;
   }
 }
