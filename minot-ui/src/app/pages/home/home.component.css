@@ -1,0 +1,26 @@
+:host{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 
+    "aside header"
+    "aside main";
+    height: 100vh;
+}
+
+aside{
+    grid-area: aside;
+    width: 15rem;
+    background-color: var(--secundary-color);
+
+}
+
+header{
+    grid-area: header;
+    background-color: rgb(255, 140, 0);
+    height: 4rem;
+}
+
+main{
+    grid-area: main;
+    height: calc(100vh - 4rem);
+}

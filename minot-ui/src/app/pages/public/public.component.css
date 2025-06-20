@@ -1,0 +1,36 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+
+    li{
+        align-content: center;
+
+    }
+
+    h1{
+        cursor: default;
+    }
+}
+
+nav ul{
+    display: flex;
+    list-style: none;
+    
+    a{
+        margin: 0 1rem;
+        text-decoration: none;
+        color: var(--font-color);
+    }
+}
+
+nav ul .active{
+    color:var(--select-color);
+} 
+
+main{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

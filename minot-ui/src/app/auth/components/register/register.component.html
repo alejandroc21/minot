@@ -1,0 +1,57 @@
+<div class="container">
+  <form>
+    <h1>Registrarse</h1>
+    <input formControlName="name" type="text" placeholder="Nombre" />
+    <input
+      formControlName="email"
+      type="email"
+      placeholder="Correo electrónico"
+    />
+    <div class="input-password">
+      <input
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        placeholder="Contraseña"
+      />
+      <button
+        type="button"
+        tabindex="-1"
+        class="btn-visibility"
+        (click)="passwordVisibility()"
+      >
+        @if(hidePassword){
+        <span class="material-icons" id="hide-password"> visibility_off </span>
+        } @else {
+        <span class="material-icons" id="show-password"> visibility </span>
+        }
+      </button>
+    </div>
+    <div class="input-password">
+      <input
+        [type]="hideconfirmPassword ? 'password' : 'text'"
+        placeholder="Confirmar contraseña"
+        formControlName="confirmPassword"
+      />
+      <button
+        type="button"
+        tabindex="-1"
+        class="btn-visibility"
+        (click)="confirmPasswordVisibility()"
+      >
+        @if(hideconfirmPassword){
+        <span class="material-icons" id="hide-password"> visibility_off </span>
+        } @else {
+        <span class="material-icons" id="show-password"> visibility </span>
+        }
+      </button>
+    </div>
+
+    <button class="register" type="submit">Registrarse</button>
+    <!-- @if(form.hasError("passwordNotMatch")){
+        <h1>passsworrrd</h1>
+    } -->
+    <div class="google">
+      <app-google-login />
+    </div>
+  </form>
+</div>
