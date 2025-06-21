@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../../environments/environment.development';
+import { Router } from '@angular/router';
 
 declare var google: any;
 
@@ -12,16 +13,15 @@ declare var google: any;
   styleUrl: './google-login.component.css',
 })
 export class GoogleLoginComponent implements OnInit {
+  private readonly clientId = environment.env.NG_APP_GOOGLE_CLIENT_ID;
   private _authService = inject(AuthService);
-
-  private clientId = environment.env.NG_APP_GOOGLE_CLIENT_ID;
+  private _router = inject(Router);
 
   ngOnInit(): void {
     google.accounts.id.initialize({
       client_id: this.clientId,
       callback: (res: any) => {
-        console.log(res);
-        this.handleLogin();
+        this.handleLogin(res.credential);
       },
     });
 
@@ -41,7 +41,14 @@ export class GoogleLoginComponent implements OnInit {
     });
   }
 
-  handleLogin() {
-    this._authService.googleLogin();
+  handleLogin(googleToken: string) {
+    this._authService.googleLogin(googleToken).subscribe({
+      next: (res) => {
+        this._router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
   }
 }

@@ -1,6 +1,9 @@
 <div class="container">
-  <form>
+  <form [formGroup]="form">
     <h1>Registrarse</h1>
+    @if (messageError) {
+      <h3 class="alert">{{messageError}}</h3>
+    }
     <input formControlName="name" type="text" placeholder="Nombre" />
     <input
       formControlName="email"
@@ -46,10 +49,12 @@
       </button>
     </div>
 
-    <button class="register" type="submit">Registrarse</button>
-    <!-- @if(form.hasError("passwordNotMatch")){
-        <h1>passsworrrd</h1>
-    } -->
+    <button (click)="register()" class="register" type="submit">
+      Registrarse
+    </button>
+    @if(form.hasError("passwordNotMatch")){
+    <h1>passsworrrd</h1>
+    }
     <div class="google">
       <app-google-login />
     </div>

@@ -71,6 +71,12 @@ input.ng-invalid.ng-touched::-webkit-input-placeholder {
   margin: 1.2rem 0;
 }
 
+.alert {
+  color: red;
+  width: 100%;
+  padding: 0 0 0.5rem;
+}
+
 @media (max-width: 490px) {
   .container {
     padding: 1.5rem 1rem;
