@@ -1,5 +1,6 @@
 package com.alejandroct.minot_api.user.model;
 
+import com.alejandroct.minot_api.folder.model.Folder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Builder
 @Entity
@@ -30,6 +32,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Folder> folders;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

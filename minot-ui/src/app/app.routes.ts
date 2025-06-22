@@ -21,6 +21,15 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./pages/home/home.component'),
+    children:[
+      {
+        path:'notes',
+        loadComponent: ()=>import('./notes/components/note/note.component')
+      },
+      {
+        path: '**', redirectTo: 'notes', pathMatch:'full'
+      }
+    ]
   },
   {
     path: '**',

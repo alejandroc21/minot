@@ -14,13 +14,19 @@ aside{
 
 }
 
-header{
+/* header{
     grid-area: header;
-    background-color: rgb(255, 140, 0);
+    background-color: var(--primary-color);
     height: 4rem;
 }
 
 main{
     grid-area: main;
     height: calc(100vh - 4rem);
+} */
+
+main{
+    grid-area: main;
+    height: 100vh;
 }
+

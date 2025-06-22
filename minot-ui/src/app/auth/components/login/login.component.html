@@ -1,15 +1,15 @@
 <div class="container">
   <form [formGroup]="form">
-    <h1>Login</h1>
+    <h1>Iniciar sesión</h1>
     @if (loginError) {
       <h3 class="alert">{{loginError}}</h3>
     }
-    <input formControlName="email" type="email" placeholder="Email" />
+    <input formControlName="email" type="email" placeholder="Correo electrónico" />
     <div class="input-password">
       <input
         [type]="hidePassword ? 'password' : 'text'"
         formControlName="password"
-        placeholder="Password"
+        placeholder="Contraseña"
       />
       <button
         type="button"
@@ -24,7 +24,7 @@
         }
       </button>
     </div>
-    <button (click)="login()" class="login" type="submit">Login</button>
+    <button (click)="login()" class="login" type="submit">Iniciar sesión</button>
 
     <div class="google">
       <app-google-login />
