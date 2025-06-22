@@ -16,16 +16,20 @@
   box-sizing: border-box;
 }
 
+html,body{
+  height: 100%;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: var(--background-color);
-  min-height:100vh;
+  min-height: 100vh;
 }
 
-a{
+a {
   user-select: none;
 }
 
-h1{
+h1 {
   user-select: none;
 }

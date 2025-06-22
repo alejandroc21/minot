@@ -1,32 +1,38 @@
-:host{
+/* .container{
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas: 
     "aside header"
     "aside main";
     height: 100vh;
+    overflow: hidden;
+} */
+
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+    "aside header"
+    "aside main";
+  height: 100vh;
+  overflow: hidden;
 }
+
 
 aside{
     grid-area: aside;
-    width: 15rem;
+    width: 17rem;
     background-color: var(--secundary-color);
-
 }
-
-/* header{
-    grid-area: header;
-    background-color: var(--primary-color);
-    height: 4rem;
-}
-
+/* 
 main{
     grid-area: main;
-    height: calc(100vh - 4rem);
 } */
 
-main{
-    grid-area: main;
-    height: 100vh;
+main {
+  grid-area: main;
+  overflow: hidden; /* evita scroll en el main */
+  display: flex;
+  flex-direction: column;
 }
-

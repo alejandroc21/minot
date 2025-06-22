@@ -8,22 +8,34 @@
       <span class="material-icons search-icon"> search </span>
       <input type="text" class="search-input" placeholder="Buscar notas" />
     </div>
-    <div class="view-toggle">
-      <button class="list view-btn">
-        <span class="material-icons"> dehaze </span>
-      </button>
-      <button class="grid view-btn">
-        <span class="material-icons"> grid_view </span>
-      </button>
-    </div>
     <select class="control-select">
       <option value="date">Fecha</option>
       <option value="Nombre">Nombre</option>
     </select>
+    <div class="view-toggle">
+      <button (click)="showList()" class="list view-btn" [class.active]="!viewGrid">
+        <span class="material-icons"> dehaze </span>
+      </button>
+      <button (click)="showGrid()" class="grid view-btn" [class.active]="viewGrid">
+        <span class="material-icons"> grid_view </span>
+      </button>
+    </div>
     <div class="control-create">
-      <button class="create-btn new-note">Nueva nota</button>
-      <button class="create-btn new-folder">Nueva carpeta</button>
+      <button class="create-btn new-note">
+        <span class="material-icons"> add </span>
+        Nota
+      </button>
+      <button class="create-btn new-folder">
+        <span class="material-icons"> add </span>
+        Carpeta
+      </button>
     </div>
   </div>
 </header>
-<section>notas</section>
+<section>
+  @if (viewGrid) {
+    <app-note-grid/>
+  }@else {
+    <app-note-list/>
+  }
+</section>

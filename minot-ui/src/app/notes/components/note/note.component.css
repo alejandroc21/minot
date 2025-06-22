@@ -1,13 +1,19 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
 header {
-  min-height: 10rem;
+  padding: 24px 32px;
   background-color: white;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
 }
 
 .page-title {
-  font-size: 1.8rem;
-  padding-bottom: 1rem;
+  font-size: 1.7rem;
+  padding-bottom: 0.5rem;
 }
 
 .breadcrumb {
@@ -42,10 +48,10 @@ header {
 
 .search-input {
   width: 100%;
-  padding: 12px 1rem 12px 40px;
+  padding: 8px 1rem 8px 40px;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 0.8rem;
-  font-size: 14px;
+  font-size: 1rem;
   transition: all 0.2s ease;
   font-family: inherit;
 }
@@ -57,13 +63,13 @@ header {
 
 .search-icon {
   position: absolute;
-  left: 1rem;
+  left: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .control-select {
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 0.5rem;
   border: 2px solid rgba(0, 0, 0, 0.1);
   background: none;
   border-radius: 0.8rem;
@@ -76,45 +82,52 @@ header {
   border-color: var(--select-color);
 }
 
-button {
-  border: none;
-  background: none;
-  font-family: inherit;
-  cursor: pointer;
-}
 .view-toggle {
   display: flex;
   justify-content: center;
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  overflow: hidden;
 }
 
-button.view-btn {
+.view-btn {
   padding: 0.5rem;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  justify-items: center;
-  text-align: center;
-  border: none;
   background: transparent;
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.control-create{
-    display: flex;
-    gap: 5px;
+.view-btn.active {
+  background-color: var(--select-color);
+  color: var(--primary-color);
 }
 
-.create-btn{
-  padding: 12px 10px;
+.control-create {
+  display: flex;
+  gap: 5px;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.create-btn {
+  border-radius: 12px;
+  padding: 10px 16px 10px 10px;
   background-color: var(--select-color);
   color: white;
   border: none;
-  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
