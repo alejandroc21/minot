@@ -1,0 +1,56 @@
+package com.alejandroct.minot_api.note.mapper;
+
+import com.alejandroct.minot_api.note.dto.NoteDTO;
+import com.alejandroct.minot_api.note.model.Note;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = "org.mapstruct.ap.MappingProcessor",
+    date = "2025-06-23T23:39:09-0500",
+    comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.15 (Ubuntu)"
+)
+@Component
+public class NoteMapperImpl implements NoteMapper {
+
+    @Override
+    public Note toEntity(NoteDTO noteDTO) {
+        if ( noteDTO == null ) {
+            return null;
+        }
+
+        Note.NoteBuilder<?, ?> note = Note.builder();
+
+        note.id( noteDTO.id() );
+        note.name( noteDTO.name() );
+        note.trashed( noteDTO.trashed() );
+        note.content( noteDTO.content() );
+
+        return note.build();
+    }
+
+    @Override
+    public NoteDTO toDto(Note note) {
+        if ( note == null ) {
+            return null;
+        }
+
+        Long parentId = null;
+        Long id = null;
+        String name = null;
+        String content = null;
+        boolean trashed = false;
+
+        parentId = toMinimalDTO( note.getParent() );
+        id = note.getId();
+        name = note.getName();
+        content = note.getContent();
+        trashed = note.isTrashed();
+
+        String type = "NOTE";
+
+        NoteDTO noteDTO = new NoteDTO( id, name, content, trashed, type, parentId );
+
+        return noteDTO;
+    }
+}

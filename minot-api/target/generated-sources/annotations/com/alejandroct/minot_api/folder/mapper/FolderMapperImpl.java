@@ -7,42 +7,46 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-21T23:58:46-0500",
+    date = "2025-06-23T23:48:54-0500",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.15 (Ubuntu)"
 )
 @Component
 public class FolderMapperImpl implements FolderMapper {
 
     @Override
-    public Folder folderDTOToFolder(FolderDTO folderDTO) {
+    public Folder toEntity(FolderDTO folderDTO) {
         if ( folderDTO == null ) {
             return null;
         }
 
-        Folder folder = new Folder();
+        Folder.FolderBuilder<?, ?> folder = Folder.builder();
 
-        folder.setId( folderDTO.id() );
-        folder.setName( folderDTO.name() );
-        folder.setParent( folderDTOToFolder( folderDTO.parent() ) );
+        folder.id( folderDTO.id() );
+        folder.name( folderDTO.name() );
+        folder.trashed( folderDTO.trashed() );
 
-        return folder;
+        return folder.build();
     }
 
     @Override
-    public FolderDTO folderToFolderDTO(Folder folder) {
+    public FolderDTO toDto(Folder folder) {
         if ( folder == null ) {
             return null;
         }
 
-        FolderDTO parent = null;
+        Long parentId = null;
         Long id = null;
         String name = null;
+        boolean trashed = false;
 
-        parent = toMinimalDTO( folder.getParent() );
+        parentId = toMinimalDTO( folder.getParent() );
         id = folder.getId();
         name = folder.getName();
+        trashed = folder.isTrashed();
 
-        FolderDTO folderDTO = new FolderDTO( id, name, parent );
+        String type = "FOLDER";
+
+        FolderDTO folderDTO = new FolderDTO( id, name, trashed, type, parentId );
 
         return folderDTO;
     }

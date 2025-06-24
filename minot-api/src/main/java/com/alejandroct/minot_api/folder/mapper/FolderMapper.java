@@ -9,14 +9,16 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface FolderMapper {
 
-    Folder folderDTOToFolder(FolderDTO folderDTO);
+    Folder toEntity(FolderDTO folderDTO);
 
-    @Mapping(target = "parent", qualifiedByName = "toMinimalDTO")
-    FolderDTO folderToFolderDTO(Folder folder);
+    @Mapping(target = "type", constant = "FOLDER")
+    @Mapping(source = "parent",target = "parentId", qualifiedByName = "toMinimalDTO")
+    FolderDTO toDto(Folder folder);
 
     @Named("toMinimalDTO")
-    default FolderDTO toMinimalDTO(Folder parent){
+    default Long toMinimalDTO(Folder parent){
         if(parent == null) return null;
-        return new FolderDTO(parent.getId(), parent.getName(), folderToFolderDTO(parent.getParent()));
+        return parent.getId();
+//        return new FolderDTO(parent.getId(), parent.getName(), parent.isTrashed(), parent.getClass().getSimpleName().toUpperCase(),null);
     }
 }

@@ -1,6 +1,7 @@
 package com.alejandroct.minot_api.user.model;
 
 import com.alejandroct.minot_api.folder.model.Folder;
+import com.alejandroct.minot_api.note.model.Note;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Folder> folders;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Note> notes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

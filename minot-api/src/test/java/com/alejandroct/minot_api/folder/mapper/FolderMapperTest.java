@@ -13,16 +13,18 @@ class FolderMapperTest {
 
     @Test
     void folderDTOToFolder() {
-        Folder folder = new Folder(1L, "test", null, null, null);
-        FolderDTO folderDTO = this.folderMapper.folderToFolderDTO(folder);
+        Folder folder = new Folder(1L, "test",false, null, null, null);
+        FolderDTO folderDTO = this.folderMapper.toDto(folder);
         assertInstanceOf(FolderDTO.class, folderDTO);
     }
 
-
     @Test
     void folderToFolderDTO() {
-        FolderDTO folderDTO = new FolderDTO(1L, "test", null);
-        Folder folder = this.folderMapper.folderDTOToFolder(folderDTO);
+        FolderDTO folderDTO = new FolderDTO(1L, "test", false,FolderDTO.class.getSimpleName(),null);
+        Folder folder = this.folderMapper.toEntity(folderDTO);
+        System.out.println(folderDTO);
         assertInstanceOf(Folder.class, folder);
     }
+
+
 }
