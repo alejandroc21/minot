@@ -1,6 +1,5 @@
 package com.alejandroct.minot_api.note.mapper;
 
-import com.alejandroct.minot_api.folder.dto.FolderDTO;
 import com.alejandroct.minot_api.folder.model.Folder;
 import com.alejandroct.minot_api.note.dto.NoteDTO;
 import com.alejandroct.minot_api.note.model.Note;
