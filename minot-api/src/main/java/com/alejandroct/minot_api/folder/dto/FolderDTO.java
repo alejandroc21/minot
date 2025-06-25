@@ -4,13 +4,17 @@ package com.alejandroct.minot_api.folder.dto;
 import com.alejandroct.minot_api.folder.model.Folder;
 import com.alejandroct.minot_api.item.dto.ItemDTO;
 
+import java.time.LocalDateTime;
+
 public record FolderDTO(
         Long      id,
         String    name,
         boolean   trashed,
         String    type,
-        Long parentId
-) implements ItemDTO {
+        Long parentId,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+        ) implements ItemDTO {
     @Override
     public Long getId() {
         return this.id;

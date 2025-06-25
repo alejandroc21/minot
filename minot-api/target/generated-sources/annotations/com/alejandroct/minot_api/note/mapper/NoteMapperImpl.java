@@ -2,12 +2,13 @@ package com.alejandroct.minot_api.note.mapper;
 
 import com.alejandroct.minot_api.note.dto.NoteDTO;
 import com.alejandroct.minot_api.note.model.Note;
+import java.time.LocalDateTime;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-23T23:39:09-0500",
+    date = "2025-06-25T17:02:09-0500",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.15 (Ubuntu)"
 )
 @Component
@@ -24,6 +25,9 @@ public class NoteMapperImpl implements NoteMapper {
         note.id( noteDTO.id() );
         note.name( noteDTO.name() );
         note.trashed( noteDTO.trashed() );
+        note.type( noteDTO.type() );
+        note.createdAt( noteDTO.createdAt() );
+        note.updatedAt( noteDTO.updatedAt() );
         note.content( noteDTO.content() );
 
         return note.build();
@@ -40,16 +44,20 @@ public class NoteMapperImpl implements NoteMapper {
         String name = null;
         String content = null;
         boolean trashed = false;
+        LocalDateTime createdAt = null;
+        LocalDateTime updatedAt = null;
 
         parentId = toMinimalDTO( note.getParent() );
         id = note.getId();
         name = note.getName();
         content = note.getContent();
         trashed = note.isTrashed();
+        createdAt = note.getCreatedAt();
+        updatedAt = note.getUpdatedAt();
 
         String type = "NOTE";
 
-        NoteDTO noteDTO = new NoteDTO( id, name, content, trashed, type, parentId );
+        NoteDTO noteDTO = new NoteDTO( id, name, content, trashed, type, parentId, createdAt, updatedAt );
 
         return noteDTO;
     }

@@ -3,6 +3,7 @@ package com.alejandroct.minot_api.note.controller;
 import com.alejandroct.minot_api.note.dto.NoteDTO;
 import com.alejandroct.minot_api.note.service.INoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,9 @@ import java.security.Principal;
 public class NoteController {
     private final INoteService noteService;
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<NoteDTO> save(@RequestBody NoteDTO noteDTO, Principal principal){
-        return ResponseEntity.ok(this.noteService.save(noteDTO, principal.getName()));
+        return new ResponseEntity<>(this.noteService.save(noteDTO, principal.getName()), HttpStatus.CREATED);
     }
 
 }

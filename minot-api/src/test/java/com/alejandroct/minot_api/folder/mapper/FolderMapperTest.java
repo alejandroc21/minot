@@ -2,6 +2,7 @@ package com.alejandroct.minot_api.folder.mapper;
 
 import com.alejandroct.minot_api.folder.dto.FolderDTO;
 import com.alejandroct.minot_api.folder.model.Folder;
+import com.alejandroct.minot_api.item.dto.ItemType;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -22,7 +23,6 @@ class FolderMapperTest {
     void folderToFolderDTO() {
         FolderDTO folderDTO = new FolderDTO(1L, "test", false,FolderDTO.class.getSimpleName(),null);
         Folder folder = this.folderMapper.toEntity(folderDTO);
-        System.out.println(folderDTO);
         assertInstanceOf(Folder.class, folder);
     }
 

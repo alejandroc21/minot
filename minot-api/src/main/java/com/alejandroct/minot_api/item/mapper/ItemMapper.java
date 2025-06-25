@@ -17,17 +17,9 @@ public abstract class ItemMapper {
     @Autowired
     protected NoteMapper noteMapper;
 
-//    NoteDTO noteToItemDto(Note note);
-
-//    @Mapping(target = "type", constant = "FOLDER")
-//    @Mapping(target = "parent", qualifiedByName = "toMinimal")
-
-//    @InheritConfiguration(name = "folderToFolderDTO")
-//    FolderDTO folderToItemDto(Folder folder);
-
     public ItemDTO toDto(Item item) {
         if (item instanceof Note n) return this.noteMapper.toDto(n);
         if (item instanceof Folder f) return this.folderMapper.toDto(f);
-        throw new IllegalArgumentException("MAPPER_ERROR: " + item.getClass().getSimpleName().toUpperCase());
+        throw new IllegalArgumentException("MAPPER_ERROR: " + item.getType());
     }
 }

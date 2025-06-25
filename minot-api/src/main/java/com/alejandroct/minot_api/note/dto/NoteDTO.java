@@ -1,15 +1,19 @@
 package com.alejandroct.minot_api.note.dto;
 
-import com.alejandroct.minot_api.folder.dto.FolderDTO;
 import com.alejandroct.minot_api.item.dto.ItemDTO;
+
+import java.time.LocalDateTime;
 
 public record NoteDTO(
         Long    id,
         String  name,
+        String preview,
         String  content,
         boolean trashed,
         String  type,
-        Long parentId
+        Long parentId,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
 
 ) implements ItemDTO {
     @Override

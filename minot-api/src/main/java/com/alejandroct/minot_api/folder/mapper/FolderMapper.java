@@ -17,8 +17,6 @@ public interface FolderMapper {
 
     @Named("toMinimalDTO")
     default Long toMinimalDTO(Folder parent){
-        if(parent == null) return null;
-        return parent.getId();
-//        return new FolderDTO(parent.getId(), parent.getName(), parent.isTrashed(), parent.getClass().getSimpleName().toUpperCase(),null);
+        return parent == null ? null : parent.getId();
     }
 }
