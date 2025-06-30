@@ -6,5 +6,6 @@ public class ValidationMessage {
     public static final String PASSWORD_REQUIRED="PASSWORD_IS_REQUIRED";
     public static final String NAME_REQUIRED="NAME_IS_REQUIRED";
 
+    public static final String PREVIEW_SIZE="preview max size is 255";
 
 }

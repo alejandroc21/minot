@@ -9,5 +9,9 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export default class HomeComponent {
+    hideAside = false;
 
+    toggleAside(){
+      this.hideAside = !this.hideAside;
+    }
 }

@@ -68,6 +68,16 @@ header {
   transform: translateY(-50%);
 }
 
+.sort-direction button {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  padding: 0.5rem;
+}
+
+.rotate {
+  rotate: 180deg;
+}
+
 .control-select {
   padding: 0.6rem 0.5rem;
   border: 2px solid rgba(0, 0, 0, 0.1);
@@ -130,4 +140,16 @@ section {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
+}
+
+section.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+section.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

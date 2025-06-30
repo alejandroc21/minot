@@ -20,8 +20,6 @@ public class Note extends Item {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private String preview;
-
     @ManyToOne
     @JoinColumn(name = "parent_id")
     private Folder parent;
@@ -29,7 +27,6 @@ public class Note extends Item {
     public Note(Long id, String name, boolean deleted, User user, String content, String preview, Folder parent) {
         super(id, name, deleted, user);
         this.content = content;
-        this.preview = preview;
         this.parent = parent;
     }
 }

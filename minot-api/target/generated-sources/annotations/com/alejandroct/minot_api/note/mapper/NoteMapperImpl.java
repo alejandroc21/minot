@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-25T17:27:18-0500",
+    date = "2025-06-30T01:20:51-0500",
     comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.15 (Ubuntu)"
 )
 @Component
@@ -29,7 +29,6 @@ public class NoteMapperImpl implements NoteMapper {
         note.createdAt( noteDTO.createdAt() );
         note.updatedAt( noteDTO.updatedAt() );
         note.content( noteDTO.content() );
-        note.preview( noteDTO.preview() );
 
         return note.build();
     }
@@ -43,7 +42,6 @@ public class NoteMapperImpl implements NoteMapper {
         Long parentId = null;
         Long id = null;
         String name = null;
-        String preview = null;
         String content = null;
         boolean trashed = false;
         LocalDateTime createdAt = null;
@@ -52,7 +50,6 @@ public class NoteMapperImpl implements NoteMapper {
         parentId = toMinimalDTO( note.getParent() );
         id = note.getId();
         name = note.getName();
-        preview = note.getPreview();
         content = note.getContent();
         trashed = note.isTrashed();
         createdAt = note.getCreatedAt();
@@ -60,7 +57,7 @@ public class NoteMapperImpl implements NoteMapper {
 
         String type = "NOTE";
 
-        NoteDTO noteDTO = new NoteDTO( id, name, preview, content, trashed, type, parentId, createdAt, updatedAt );
+        NoteDTO noteDTO = new NoteDTO( id, name, content, trashed, type, parentId, createdAt, updatedAt );
 
         return noteDTO;
     }

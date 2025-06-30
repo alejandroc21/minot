@@ -13,7 +13,6 @@ import java.util.Optional;
 @Repository
 public interface FolderRepository extends JpaRepository<Folder, Long> {
 
-
     @Query("""
             SELECT f FROM  Folder f WHERE f.user.email = :userEmail
                 AND (:parentId IS NULL AND  f.parent IS NULL

@@ -6,10 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.security.Principal;
+
 public interface IFolderService {
-    Page<FolderDTO> listFolders(Long parentId, Pageable pageable, String userEmail);
+//    Page<FolderDTO> listFolders(Long parentId, Pageable pageable, String userEmail);
+
+    Folder findByIdAndUserEmail(Long id, String email);
 
     FolderDTO save(FolderDTO folderDTO, String email);
 
-    Folder findById(Long id);
+    FolderDTO update(FolderDTO folderDTO, Long id, String email);
 }

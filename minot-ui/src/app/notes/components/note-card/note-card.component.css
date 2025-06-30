@@ -1,0 +1,112 @@
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .icon {
+    font-size: 24px;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    background: rgba(102, 126, 234, 0.1);
+    background-color: var(--select-color);
+    color: var(--primary-color);
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: 600;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .preview {
+    height: 38%;
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 1rem;
+  }
+
+  .meta {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .date {
+    font-size: 14px;
+    color: gray;
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 200px 3fr auto;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1rem 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  gap: 20px;
+
+  .header {
+    display: flex;
+    margin-bottom: 0;
+    gap: 1rem;
+    min-width: 0;
+    max-width: 200px;
+  }
+
+  .title {
+    margin-bottom: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .preview {
+    display: block;
+    font-size: 12px;
+    color: #9ca3af;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: auto;
+  }
+
+  .date {
+    font-size: 14px;
+    color: gray;
+  }
+}

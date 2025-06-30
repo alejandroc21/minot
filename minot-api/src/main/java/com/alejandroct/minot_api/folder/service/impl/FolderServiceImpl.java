@@ -9,8 +9,6 @@ import com.alejandroct.minot_api.user.model.User;
 import com.alejandroct.minot_api.user.service.IUserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,15 +18,21 @@ public class FolderServiceImpl implements IFolderService {
     private final IUserService userService;
     private final FolderMapper folderMapper;
 
+//    @Override
+//    public Page<FolderDTO> listFolders(Long parentId, Pageable pageable, String userEmail) {
+//        Page<Folder> folders;
+//        if(parentId == null){
+//            folders = this.folderRepository.findByUserEmailAndParentIsNull(userEmail,pageable);
+//        }else {
+//            folders = this.folderRepository.findByUserEmailAndParentId(userEmail,parentId,pageable);
+//        }
+//        return folders.map(this.folderMapper::toDto);
+//    }
+
     @Override
-    public Page<FolderDTO> listFolders(Long parentId, Pageable pageable, String userEmail) {
-        Page<Folder> folders;
-        if(parentId == null){
-            folders = this.folderRepository.findByUserEmailAndParentIsNull(userEmail,pageable);
-        }else {
-            folders = this.folderRepository.findByUserEmailAndParentId(userEmail,parentId,pageable);
-        }
-        return folders.map(this.folderMapper::toDto);
+    public Folder findByIdAndUserEmail(Long id, String email){
+        return this.folderRepository.findByIdAndUserEmail(id, email)
+                .orElseThrow(()->new EntityNotFoundException("folder not found"));
     }
 
     @Override
@@ -36,7 +40,7 @@ public class FolderServiceImpl implements IFolderService {
         User user = this.userService.findUserByEmail(email);
         Folder folder = this.folderMapper.toEntity(folderDTO);
         if(folderDTO.parentId()!=null){
-            Folder parent = this.findById(folderDTO.parentId());
+            Folder parent = this.findByIdAndUserEmail(folderDTO.parentId(), email);
             folder.setParent(parent);
         }
         folder.setUser(user);
@@ -44,7 +48,9 @@ public class FolderServiceImpl implements IFolderService {
     }
 
     @Override
-    public Folder findById(Long id) {
-        return this.folderRepository.findById(id).orElseThrow(()->new EntityNotFoundException("folder not found"));
+    public FolderDTO update(FolderDTO folderDTO, Long id, String email) {
+        Folder folder = this.findByIdAndUserEmail(id, email);
+        folder.setName(folderDTO.getName());
+        return folderMapper.toDto(this.folderRepository.save(folder));
     }
 }

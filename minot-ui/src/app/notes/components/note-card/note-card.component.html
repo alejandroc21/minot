@@ -1,0 +1,20 @@
+<div [class]="grid() ? 'card' : 'list'">
+  <div class="header">
+    <div class="icon">
+      <span class="material-icons">
+        {{ isNote(item()) ?  "article" : "folder"}}</span
+      >
+    </div>
+    <div class="title">
+      {{ item().name }}
+    </div>
+  </div>
+  <div class="preview">
+    @if (isNote(item())) {
+      {{noteItem!.preview}}
+    }
+  </div>
+  <div class="meta">
+    <div class="date">{{ item().updatedAt | date : "short" }}</div>
+  </div>
+</div>

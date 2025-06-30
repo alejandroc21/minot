@@ -6,10 +6,7 @@ import com.alejandroct.minot_api.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 import java.util.List;
-
-
 
 @EqualsAndHashCode(callSuper = true)
 @Data

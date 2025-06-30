@@ -35,13 +35,21 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth->auth
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/webjars/**"
+                        ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
-//                .exceptionHandling(ex->ex.authenticationEntryPoint((request, response, authException) -> {
-//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-//                }).accessDeniedHandler((request, response, accessDeniedException) -> {
-//                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-//                }))
+                .exceptionHandling(ex->ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                }))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(this.authenticationProvider)
                 .addFilterBefore(this.authenticationFilter, UsernamePasswordAuthenticationFilter.class)

@@ -6,6 +6,8 @@ import java.util.List;
 public record ItemFilter(
         List<ItemType> type,
         String text,
-        Boolean trashed
+        Boolean trashed,
+        Long parentId,
+        Boolean root
 ) {
 }

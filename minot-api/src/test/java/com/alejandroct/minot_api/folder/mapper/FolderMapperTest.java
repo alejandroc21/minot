@@ -21,7 +21,7 @@ class FolderMapperTest {
 
     @Test
     void folderToFolderDTO() {
-        FolderDTO folderDTO = new FolderDTO(1L, "test", false,FolderDTO.class.getSimpleName(),null);
+        FolderDTO folderDTO = new FolderDTO(1L, "test",false, FolderDTO.class.getSimpleName(),1l,null,null);
         Folder folder = this.folderMapper.toEntity(folderDTO);
         assertInstanceOf(Folder.class, folder);
     }

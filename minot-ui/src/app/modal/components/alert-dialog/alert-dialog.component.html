@@ -1,0 +1,17 @@
+<!-- <h2 mat-dialog-title>{{ data.title || 'Notice' }}</h2>
+    <mat-dialog-content>
+      <p>{{ data.message }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button color="primary" (click)="onOk()">
+        {{ data.okText || 'OK' }}
+      </button>
+    </mat-dialog-actions> -->
+<div class="data">
+  <div class="content">
+    <h2 mat-dialog-title>{{ data.message }}</h2>
+  </div>
+  <button (click)="onOk()">
+    {{ data.okText || "Aceptar" }}
+  </button>
+</div>

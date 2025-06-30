@@ -2,7 +2,6 @@ package com.alejandroct.minot_api.item.model;
 
 import com.alejandroct.minot_api.user.model.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

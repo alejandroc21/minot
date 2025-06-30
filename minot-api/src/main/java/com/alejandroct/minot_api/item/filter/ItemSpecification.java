@@ -4,7 +4,6 @@ import com.alejandroct.minot_api.item.dto.ItemFilter;
 import com.alejandroct.minot_api.item.dto.ItemType;
 import com.alejandroct.minot_api.item.model.Item;
 import jakarta.persistence.criteria.Predicate;
-import org.hibernate.validator.constraints.UUID;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +25,26 @@ public class ItemSpecification {
             if(filter.trashed() != null){
                 predicates.add(cb.equal(root.get("trashed"), filter.trashed()));
             }
+
+            if(Boolean.TRUE.equals(filter.root())){
+                predicates.add(cb.isNull(root.get("parent")));
+            }else if(filter.root()!=null){
+                predicates.add(cb.and(
+                                root.type().in(ItemType.NOTE.name(),ItemType.FOLDER.name()),
+                                cb.equal(root.get("parent").get("id"), filter.parentId())
+                        )
+                );
+            }
+
+//            if(filter.parentId() != null){
+//                predicates.add(cb.and(
+//                        root.type().in(ItemType.NOTE.name(),ItemType.FOLDER.name()),
+//                        cb.equal(root.get("parent").get("id"), filter.parentId())
+//                        )
+//                );
+//            }
+
+
 
             if(StringUtils.hasText(filter.text())){
                 String pattern = "%"+filter.text().toLowerCase()+"%";
