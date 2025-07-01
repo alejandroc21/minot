@@ -1,0 +1,153 @@
+<header>
+  <h1 class="page-title">Notas</h1>
+  <div class="control-bar">
+    <div class="search-box">
+      <span class="material-symbols-outlined search-icon"> search </span>
+      <input type="text" class="search-input" placeholder="Buscar notas" />
+    </div>
+    <div class="sort-direction">
+      <button (click)="toggleSort()" [class.rotate]="sortAsc">
+        <span class="material-symbols-outlined"> arrow_downward </span>
+      </button>
+    </div>
+    <select class="control-select">
+      <option value="date">Fecha</option>
+      <option value="Nombre">Nombre</option>
+    </select>
+    <div class="view-toggle">
+      <button
+        (click)="showList()"
+        class="list view-btn"
+        [class.active]="!viewGrid"
+      >
+        <span class="material-symbols-outlined"> dehaze </span>
+      </button>
+      <button
+        (click)="showGrid()"
+        class="grid view-btn"
+        [class.active]="viewGrid"
+      >
+        <span class="material-symbols-outlined"> grid_view </span>
+      </button>
+    </div>
+    <div class="control-create">
+      <button class="create-btn new-note" (click)="showAlert()">
+        <span class="material-symbols-outlined"> add </span>
+        Nota
+      </button>
+    </div>
+  </div>
+</header>
+<section class="grid">
+  <div class="card">
+    <div class="header">
+      <div class="icon">
+        <span class="material-symbols-outlined"> article</span>
+      </div>
+      <div class="title">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+        necessitatibus quas atque sapiente officiis minima, quia repellat eaque
+        minus consequatur iure praesentium neque, totam saepe modi provident,
+        libero labore officia.
+      </div>
+    </div>
+    <div class="preview">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex natus
+      corporis eveniet commodi voluptatum animi, earum in expedita omnis facilis
+      soluta magni quos placeat. Error ipsum maiores necessitatibus cupiditate
+      recusandae!
+    </div>
+    <div class="meta">
+      <div class="date">hoy</div>
+    </div>
+  </div>
+   <div class="card">
+    <div class="header">
+      <div class="icon">
+        <span class="material-symbols-outlined"> article</span>
+      </div>
+      <div class="title">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+        necessitatibus quas atque sapiente officiis minima, quia repellat eaque
+        minus consequatur iure praesentium neque, totam saepe modi provident,
+        libero labore officia.
+      </div>
+    </div>
+    <div class="preview">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex natus
+      corporis eveniet commodi voluptatum animi, earum in expedita omnis facilis
+      soluta magni quos placeat. Error ipsum maiores necessitatibus cupiditate
+      recusandae!
+    </div>
+    <div class="meta">
+      <div class="date">hoy</div>
+    </div>
+  </div>
+   <div class="card">
+    <div class="header">
+      <div class="icon">
+        <span class="material-symbols-outlined"> article</span>
+      </div>
+      <div class="title">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+        necessitatibus quas atque sapiente officiis minima, quia repellat eaque
+        minus consequatur iure praesentium neque, totam saepe modi provident,
+        libero labore officia.
+      </div>
+    </div>
+    <div class="preview">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex natus
+      corporis eveniet commodi voluptatum animi, earum in expedita omnis facilis
+      soluta magni quos placeat. Error ipsum maiores necessitatibus cupiditate
+      recusandae!
+    </div>
+    <div class="meta">
+      <div class="date">hoy</div>
+    </div>
+  </div>
+   <div class="card">
+    <div class="header">
+      <div class="icon">
+        <span class="material-symbols-outlined"> article</span>
+      </div>
+      <div class="title">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+        necessitatibus quas atque sapiente officiis minima, quia repellat eaque
+        minus consequatur iure praesentium neque, totam saepe modi provident,
+        libero labore officia.
+      </div>
+    </div>
+    <div class="preview">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex natus
+      corporis eveniet commodi voluptatum animi, earum in expedita omnis facilis
+      soluta magni quos placeat. Error ipsum maiores necessitatibus cupiditate
+      recusandae!
+    </div>
+    <div class="meta">
+      <div class="date">hoy</div>
+    </div>
+  </div>
+   <div class="card">
+    <div class="header">
+      <div class="icon">
+        <span class="material-symbols-outlined"> article</span>
+      </div>
+      <div class="title">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci
+        necessitatibus quas atque sapiente officiis minima, quia repellat eaque
+        minus consequatur iure praesentium neque, totam saepe modi provident,
+        libero labore officia.
+      </div>
+    </div>
+    <div class="preview">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex natus
+      corporis eveniet commodi voluptatum animi, earum in expedita omnis facilis
+      soluta magni quos placeat. Error ipsum maiores necessitatibus cupiditate
+      recusandae!
+    </div>
+    <div class="meta">
+      <div class="date">hoy</div>
+    </div>
+  </div>
+  
+</section>

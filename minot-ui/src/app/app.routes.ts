@@ -24,6 +24,17 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./pages/home/home.component'),
+    children:[
+      {
+        path: '', loadComponent: ()=>import('./pages/items/items.component')
+      },
+      {
+        path: 'notes', loadComponent: ()=>import('./pages/notes/notes.component')
+      },
+      {
+        path: '**', redirectTo: '', pathMatch: 'full'
+      }
+    ]
   },
   {
     path: '**',

@@ -1,13 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=WDXL+Lubrifont+TC&display=swap");
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 :root {
-  --background-color: #f5efe7;
+  /* --background-color: #f5efe7;
   --select-color: #5e2dd8;
   --primary-color: #ffffff;
   --secundary-color: #f6f6f6;
-  --font-color: #000000;
+  --font-color: #000000;*/
   --shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   --shadow-select: 0 4px 8px 0 gray, 0 6px 20px 0 gray;
+  --shadow-2: 0 10px 15px -3px gray, 0 4px 6px -2px gray;
+
+  --bg-color: #ffffff;
+  --primary-color: #4f46e5;
+  --primary-focus:#6366f1;
+  --font-color:#1f2937;
+  --font-alter: #fff;
 }
 
 * {
@@ -16,21 +23,22 @@
   box-sizing: border-box;
 }
 
-html,body{
+html,
+body {
   height: 100%;
-} 
+}
 
 body {
+  background-color: var(--bg-color);
   font-family: "Poppins", sans-serif;
-  background-color: var(--background-color);
   min-height: 100vh;
 }
 
-a, h1 , label {
+a,
+h1,
+label {
   user-select: none;
 }
-
-
 
 /* .cdk-overlay-container {
   position: fixed;
@@ -62,15 +70,11 @@ a, h1 , label {
   /* padding: 1rem; */
 }
 
-
-
 .toast-success {
-  background-color: #27ae60; 
+  background-color: #27ae60;
 }
 
 .toast-error {
-  background-color: #3c6ae7 !important; 
+  background-color: #3c6ae7 !important;
   /* background-color: #4b4eeb !important; */
-
 }
-
