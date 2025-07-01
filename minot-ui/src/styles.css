@@ -26,13 +26,10 @@ body {
   min-height: 100vh;
 }
 
-a {
+a, h1 , label {
   user-select: none;
 }
 
-h1 {
-  user-select: none;
-}
 
 
 /* .cdk-overlay-container {
@@ -63,5 +60,17 @@ h1 {
   /* font-family: inherit; */
   font-weight: 600;
   /* padding: 1rem; */
+}
+
+
+
+.toast-success {
+  background-color: #27ae60; 
+}
+
+.toast-error {
+  background-color: #3c6ae7 !important; 
+  /* background-color: #4b4eeb !important; */
+
 }
 

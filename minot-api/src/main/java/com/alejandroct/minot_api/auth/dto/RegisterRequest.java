@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import static com.alejandroct.minot_api.constants.ValidationMessage.*;
 
 public record RegisterRequest(
-        @NotBlank(message = NAME_REQUIRED)
-        String name,
+
         @NotBlank(message = EMAIL_REQUIRED)
         @Email(message = VALID_EMAIL)
         String email,

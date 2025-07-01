@@ -1,45 +1,45 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
-import { catchError, throwError, switchMap } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-
   const token = authService.authToken;
 
-  const authReq = req.clone({
-    setHeaders:{
-      Authorization: `Bearer ${token}`
-    }
-  });
+  if (req.url.includes('/refresh') || req.url.includes('/logout')) {
+    return next(req);
+  }
 
+  const createAuthRequest = (token: string | null) =>
+    token
+      ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
+      : req;
 
+  const handleTokenRefresh = () => {
+    return authService.refreshToken().pipe(
+      switchMap(() => next(createAuthRequest(authService.authToken))),
+      catchError((refreshError) => {
+        if (refreshError.status === 401) {
+          authService.logout();
+        }
+        return throwError(() => refreshError);
+      })
+    );
+  };
 
-    return next(authReq).pipe(
-    catchError((err) => {
-      if(err.status !== 401){
-        return throwError(()=> err);
+  if (authService.authToken && !authService.isAuthenticated()) {
+    return handleTokenRefresh();
+  }
+  const initialReq = createAuthRequest(authService.authToken);
+
+  return next(initialReq).pipe(
+    catchError((error) => {
+      if (error.status !== 401) {
+        return throwError(() => error);
       }
 
-      if (req.url.includes('/refresh')) {
-        authService.logout();
-        return throwError(() => err);
-      }
-
-      return authService.refreshToken().pipe(
-        switchMap((res) => {
-          const refreshReq = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${res.token}`
-            },
-          });
-          return next(refreshReq);
-        }),
-        catchError((refreshErr) => {
-          return throwError(()=>refreshErr);
-        })
-      );
+      return handleTokenRefresh();
     })
   );
 };

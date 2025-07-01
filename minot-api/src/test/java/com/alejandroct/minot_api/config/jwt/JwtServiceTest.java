@@ -34,7 +34,6 @@ class JwtServiceTest {
     }
 
     private final User testUser = User.builder()
-            .name("testUser")
             .email("test@test.com")
             .password("test123")
             .build();

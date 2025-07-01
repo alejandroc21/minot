@@ -1,28 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { User } from '../model/user';
 import { TokenResponse } from '../model/token-response';
-import { RegisterRequest } from '../model/register-request';
-import { LoginResquest } from '../model/login-resquest';
-import { User } from '../../user/model/user';
 import { catchError, tap, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { AuthRequest } from '../model/auth-request';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = environment.env.API_URL + '/auth';
-  private _http = inject(HttpClient);
-  private _accessToken: string | null = null;
+  private readonly API_URL = `${environment.env.API_URL}/auth`;
+  private readonly _http = inject(HttpClient);
   private _accessTokenExpiration: number | null = null;
+  private _accessToken: string | null = null;
+  private _toastService = inject(ToastrService);
+  public currentUser = signal<User | null>(null);
 
-  currentUser = signal<User | null>(null);
-
-  constructor() {}
-
-  register(request: RegisterRequest) {
+  public register(request: AuthRequest) {
     return this._http
-      .post<TokenResponse>(this.API_URL + '/register', request, {
+      .post<TokenResponse>(`${this.API_URL}/register`, request, {
         withCredentials: true,
       })
       .pipe(
@@ -30,16 +28,13 @@ export class AuthService {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
         }),
-        catchError((error) => {
-          this.clearAuthData();
-          return throwError(() => error);
-        })
+        catchError(this.handleError)
       );
   }
 
-  login(request: LoginResquest) {
+  public login(request: AuthRequest) {
     return this._http
-      .post<TokenResponse>(this.API_URL + '/login', request, {
+      .post<TokenResponse>(`${this.API_URL}/login`, request, {
         withCredentials: true,
       })
       .pipe(
@@ -47,20 +42,15 @@ export class AuthService {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
         }),
-        catchError((error) => {
-          this.clearAuthData();
-          return throwError(() => error);
-        })
+        catchError(this.handleError)
       );
   }
 
-  googleLogin(googleToken: string) {
+  public googleLogin(googleToken: string) {
     return this._http
       .post<TokenResponse>(
-        this.API_URL + '/google-login',
-        {
-          token: googleToken,
-        },
+        `${this.API_URL}/google-login`,
+        { token: googleToken },
         { withCredentials: true }
       )
       .pipe(
@@ -68,14 +58,11 @@ export class AuthService {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
         }),
-        catchError((error) => {
-          this.clearAuthData();
-          return throwError(() => error);
-        })
+        catchError(this.handleError)
       );
   }
 
-  refreshToken() {
+  public refreshToken() {
     return this._http
       .post<TokenResponse>(
         this.API_URL + '/refresh',
@@ -94,7 +81,7 @@ export class AuthService {
       );
   }
 
-  logout() {
+  public logout() {
     return this._http
       .post<boolean>(this.API_URL + '/logout', {}, { withCredentials: true })
       .pipe(
@@ -110,19 +97,20 @@ export class AuthService {
       );
   }
 
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     if (!this._accessToken) {
       return false;
     }
     const now = Date.now();
-    return this._accessTokenExpiration ? this._accessTokenExpiration > now + (60 * 1000) : true;
+    return this._accessTokenExpiration
+      ? this._accessTokenExpiration > now + 60 * 1000
+      : false;
   }
 
   private setCurrentUser(token: string) {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const user: User = {
-        name: payload.name,
         email: payload.sub,
       };
       this.currentUser.set(user);
@@ -138,6 +126,25 @@ export class AuthService {
     this._accessTokenExpiration = null;
     this._accessToken = null;
   }
+
+  private handleError = (error: HttpErrorResponse) => {
+    let message = '';
+
+    if (error.status === 0) {
+      message = 'Algo salió mal';
+    } else {
+      switch (error.error.message) {
+        case 'EMAIL_IN_USE':
+          message = 'Ingresa un email diferente';
+          break;
+        case 'USER_NOT_FOUND':
+          message = 'El usuario no existe';
+          break;
+      }
+    }
+    this._toastService.error(message, 'Error');
+    return throwError(() => error);
+  };
 
   get authToken() {
     return this._accessToken;

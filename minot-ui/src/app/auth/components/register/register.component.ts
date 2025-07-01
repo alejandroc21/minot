@@ -1,60 +1,58 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { GoogleLoginComponent } from '../google-login/google-login.component';
-import { AuthService } from '../../services/auth.service';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { GoogleButtonComponent } from '../google-button/google-button.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 import { passwordMatch } from '../../validators/password-match.validator';
-import { RegisterRequest } from '../../model/register-request';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { AuthRequest } from '../../model/auth-request';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [GoogleLoginComponent, ReactiveFormsModule],
+  imports: [RouterLink, GoogleButtonComponent, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export default class RegisterComponent implements OnInit {
-  private _authService = inject(AuthService);
+export default class RegisterComponent {
+hidePassword: any;
+passwordVisibility() {
+throw new Error('Method not implemented.');
+}
   private _formBuilder = inject(FormBuilder);
+  private _authService = inject(AuthService);
   private _router = inject(Router);
-  hidePassword = true;
-  hideconfirmPassword = true;
-  messageError = '';
+  public form = this._formBuilder.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+    },
+    { validators: passwordMatch }
+  );
 
-  form = this._formBuilder.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', Validators.required],
-    confirmPassword: ['', [Validators.required], [passwordMatch]],
-  });
-
-  ngOnInit(): void {
-    this.form.get('password')?.valueChanges.subscribe(() => {
-      this.form.get('confirmPassword')?.updateValueAndValidity();
-      console.log('something');
-    });
-  }
-
-  passwordVisibility() {
-    this.hidePassword = !this.hidePassword;
-  }
-  confirmPasswordVisibility() {
-    this.hideconfirmPassword = !this.hideconfirmPassword;
-  }
-
-  register() {
+  public register() {
     if(this.form.valid){
-      this.messageError = '';
-      this._authService.register(this.form.value as RegisterRequest).subscribe({
-        next:res=>{
-          this._router.navigate(['/home']);
-        },
-        error:(err:HttpErrorResponse)=>{
-          const error: { error: string } = err.error;
-          this.messageError = error.error;
+      this._authService.register(this.form.value as AuthRequest).subscribe({
+        next:()=>{
+          this._router.navigateByUrl("/home");
+          this.form.reset();
         }
       })
+      
+    }else{
+      this.form.markAllAsTouched();
     }
+  }
+
+  get email(){
+    return this.form.controls.email;
+  }
+
+  get password(){
+    return this.form.controls.password;
+  }
+
+  get confirmPassword(){
+    return this.form.controls.confirmPassword;
   }
 }

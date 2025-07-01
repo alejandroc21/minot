@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations' 
-
+import { provideAnimations } from '@angular/platform-browser/animations' 
+import {provideToastr} from 'ngx-toastr';
 import { routes } from './app.routes';
 import {
   provideHttpClient,
@@ -10,12 +10,14 @@ import {
   
 } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),
-    provideAnimations()
+    provideHttpClient(withInterceptors([authInterceptor,errorInterceptor])),
+    provideAnimations(),
+    provideToastr(),
   ],
 };

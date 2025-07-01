@@ -1,17 +1,10 @@
-import {
-  AbstractControl,
-  AsyncValidatorFn,
-  ValidationErrors,
-} from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { ValidatorFn, AbstractControl, ValidationErrors } from "@angular/forms";
 
-export const passwordMatch: AsyncValidatorFn = (
-  control: AbstractControl
-): Observable<ValidationErrors | null> => {
-  if (!control.parent) return of(null);
-
-  const password = control.parent.get('password')?.value;
-  const confirmPassword = control.value;
-
-  return of(password === confirmPassword ? null : { passwordNotMatch: true });
+export const passwordMatch:ValidatorFn = (formGroup: AbstractControl):ValidationErrors | null => {
+  const passwordControl = formGroup.get('password');
+  const confirmPasswordControl = formGroup.get('confirmPassword');
+     
+  return passwordControl?.value === confirmPasswordControl?.value
+    ? null
+    : { passwordNotMatch: true };
 };
