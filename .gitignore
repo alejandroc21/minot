@@ -30,6 +30,8 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
+minot-api/target/
+minot-ui/.angular/
 .angular/cache/
 .angular/cache
 minot-ui/.angular-cache

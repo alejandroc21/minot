@@ -1,18 +1,11 @@
 package com.alejandroct.minot_api.note.dto;
 
 import com.alejandroct.minot_api.item.dto.ItemDTO;
-<<<<<<< HEAD
-import jakarta.validation.constraints.NotBlank;
+
 
 
 import java.time.LocalDateTime;
 
-import static com.alejandroct.minot_api.constants.ValidationMessage.NAME_REQUIRED;
-
-=======
-import java.time.LocalDateTime;
-
->>>>>>> refactor/api
 public record NoteDTO(
         Long    id,
         String  name,
