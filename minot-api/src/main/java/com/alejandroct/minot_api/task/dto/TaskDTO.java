@@ -1,22 +1,19 @@
-package com.alejandroct.minot_api.note.dto;
+package com.alejandroct.minot_api.task.dto;
 
 import com.alejandroct.minot_api.item.dto.ItemDTO;
-<<<<<<< HEAD
-import jakarta.validation.constraints.NotBlank;
-
+import com.alejandroct.minot_api.task.model.Status;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.lang.NonNull;
 
 import java.time.LocalDateTime;
 
-import static com.alejandroct.minot_api.constants.ValidationMessage.NAME_REQUIRED;
-
-=======
-import java.time.LocalDateTime;
-
->>>>>>> refactor/api
-public record NoteDTO(
+public record TaskDTO(
         Long    id,
         String  name,
         String  content,
+        @NotNull(message = "status can't be null")
+        Status status,
         boolean trashed,
         String  type,
         LocalDateTime createdAt,

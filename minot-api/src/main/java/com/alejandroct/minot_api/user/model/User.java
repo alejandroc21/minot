@@ -1,6 +1,5 @@
 package com.alejandroct.minot_api.user.model;
 
-import com.alejandroct.minot_api.folder.model.Folder;
 import com.alejandroct.minot_api.note.model.Note;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,9 +29,6 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Folder> folders;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Note> notes;

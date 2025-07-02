@@ -1,6 +1,5 @@
 package com.alejandroct.minot_api.item.service.impl;
 
-import com.alejandroct.minot_api.folder.model.Folder;
 import com.alejandroct.minot_api.item.dto.ItemDTO;
 import com.alejandroct.minot_api.item.dto.ItemFilter;
 import com.alejandroct.minot_api.item.filter.ItemSpecification;
@@ -15,9 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,20 +39,10 @@ public class ItemServiceImpl implements IItemService {
     public Boolean sendToTrash(Long id, String email) {
         Item item = this.findItemByIdAndUserEmail(id, email);
         item.setTrashed(true);
-        List<Item> items = new ArrayList<>();
-        this.collectItemsToTrash(item, items);
-        items.forEach(i -> i.setTrashed(true));
-        this.itemRepository.saveAll(items);
+        this.itemRepository.save(item);
         return true;
     }
 
-    private void collectItemsToTrash(Item item, List<Item> items){
-        items.add(item);
-        if(item instanceof Folder folder){
-            folder.getChildren().forEach(note -> collectItemsToTrash(note, items));
-            folder.getChildren().forEach(child -> collectItemsToTrash(child, items));
-        }
-    }
 
     @Override
     public Boolean delete(Long id, String email) {

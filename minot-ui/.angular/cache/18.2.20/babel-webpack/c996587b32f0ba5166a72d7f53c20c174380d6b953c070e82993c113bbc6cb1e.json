@@ -1,1 +1,0 @@
-{"ast":null,"code":"export const environment = {\n  production: false,\n  env: {\n    API_URL: `${import.meta.env['NG_APP_API']}/api`,\n    NG_APP_GOOGLE_CLIENT_ID: import.meta.env['NG_APP_GOOGLE_CLIENT_ID']\n  }\n};","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
