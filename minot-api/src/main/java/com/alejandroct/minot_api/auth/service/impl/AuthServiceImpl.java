@@ -55,7 +55,6 @@ public class AuthServiceImpl implements IAuthService {
             throw new IllegalArgumentException(EMAIL_IN_USE);
         }
         User user = User.builder()
-                .name(request.name())
                 .email(request.email())
                 .password(this.passwordEncoder.encode(request.password()))
                 .build();
@@ -90,7 +89,6 @@ public class AuthServiceImpl implements IAuthService {
                 String name = payload.get("name").toString();
                 String password = UUID.randomUUID().toString();
                 user = User.builder()
-                        .name(name)
                         .email(email)
                         .password(this.passwordEncoder.encode(password))
                         .build();

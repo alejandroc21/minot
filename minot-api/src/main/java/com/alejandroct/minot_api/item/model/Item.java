@@ -24,9 +24,11 @@ public abstract class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
     private boolean trashed;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
     @Column(name = "type", insertable = false, updatable = false)
     private String type;
@@ -42,9 +44,10 @@ public abstract class Item {
     @ManyToOne(optional = false)
     private User user;
 
-    public Item(Long id, String name, boolean trashed, User user) {
+    public Item(Long id, String name, String content, boolean trashed, User user) {
         this.id = id;
         this.name = name;
+        this.content = content;
         this.trashed = trashed;
         this.user = user;
     }

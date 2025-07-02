@@ -26,42 +26,19 @@ public class ItemSpecification {
                 predicates.add(cb.equal(root.get("trashed"), filter.trashed()));
             }
 
-            if(Boolean.TRUE.equals(filter.root())){
-                predicates.add(cb.isNull(root.get("parent")));
-            }else if(filter.root()!=null){
-                predicates.add(cb.and(
-                                root.type().in(ItemType.NOTE.name(),ItemType.FOLDER.name()),
-                                cb.equal(root.get("parent").get("id"), filter.parentId())
-                        )
-                );
-            }
-
-//            if(filter.parentId() != null){
-//                predicates.add(cb.and(
-//                        root.type().in(ItemType.NOTE.name(),ItemType.FOLDER.name()),
-//                        cb.equal(root.get("parent").get("id"), filter.parentId())
-//                        )
-//                );
-//            }
-
-
 
             if(StringUtils.hasText(filter.text())){
                 String pattern = "%"+filter.text().toLowerCase()+"%";
 
-                Predicate folder = cb.and(
-                        cb.equal(root.type(), ItemType.FOLDER.name()),
-                        cb.like(cb.lower(root.get("name")), pattern));
-
                 Predicate content = cb.and(
-                        root.type().in(ItemType.NOTE.name()),
+                        root.type().in(ItemType.NOTE.name(), ItemType.TASK.name()),
                         cb.or(
                                 cb.like(cb.lower(root.get("name")),pattern),
                                 cb.like(cb.lower(root.get("content")), pattern)
                         )
                 );
 
-                predicates.add(cb.or(folder, content));
+                predicates.add(cb.or(content));
             }
 
 

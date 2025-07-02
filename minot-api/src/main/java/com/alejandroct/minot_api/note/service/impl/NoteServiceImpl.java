@@ -1,7 +1,5 @@
 package com.alejandroct.minot_api.note.service.impl;
 
-import com.alejandroct.minot_api.folder.model.Folder;
-import com.alejandroct.minot_api.folder.service.IFolderService;
 import com.alejandroct.minot_api.note.dto.NoteDTO;
 import com.alejandroct.minot_api.note.mapper.NoteMapper;
 import com.alejandroct.minot_api.note.model.Note;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NoteServiceImpl implements INoteService {
     private final IUserService userService;
-    private final IFolderService folderService;
     private final NoteRepository noteRepository;
     private final NoteMapper noteMapper;
 
@@ -31,10 +28,6 @@ public class NoteServiceImpl implements INoteService {
     public NoteDTO save(NoteDTO noteDTO, String email){
         User user = this.userService.findUserByEmail(email);
         Note note = this.noteMapper.toEntity(noteDTO);
-        if(noteDTO.parentId()!=null){
-            Folder parent = this.folderService.findByIdAndUserEmail(noteDTO.parentId(), email);
-            note.setParent(parent);
-        }
         note.setUser(user);
         return this.noteMapper.toDto(this.noteRepository.save(note));
     }
