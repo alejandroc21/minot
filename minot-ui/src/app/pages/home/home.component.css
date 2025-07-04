@@ -97,9 +97,42 @@ aside a {
   color: var(--font-color);
 }
 
+aside ul li .active {
+  color: var(--primary-color);
+  span {
+    font-variation-settings: "FILL" 1;
+  }
+}
+/* aside ul li .active:hover {
+  color: #fff;
+} */
+
 main {
   grid-area: main;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  aside {
+    flex-direction: column;
+    padding: 0.5rem;
+    width: 4rem;
+
+    .sidebar-header {
+      display: block;
+      text-align: center;
+      padding: 0.1rem;
+      margin: 1rem 0;
+    }
+
+    a {
+      padding-left: 0.8rem;
+    }
+
+    h1 {
+      display: none;
+    }
+  }
 }

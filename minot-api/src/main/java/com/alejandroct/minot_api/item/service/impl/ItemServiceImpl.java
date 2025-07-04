@@ -36,11 +36,11 @@ public class ItemServiceImpl implements IItemService {
 
     @Override
     @Transactional
-    public Boolean sendToTrash(Long id, String email) {
+    public ItemDTO sendToTrash(Long id, String email) {
         Item item = this.findItemByIdAndUserEmail(id, email);
         item.setTrashed(true);
-        this.itemRepository.save(item);
-        return true;
+        item = this.itemRepository.save(item);
+        return this.itemMapper.toDto(item);
     }
 
 
@@ -49,5 +49,13 @@ public class ItemServiceImpl implements IItemService {
         this.findItemByIdAndUserEmail(id, email);
         this.itemRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public ItemDTO restore(Long id, String email) {
+        Item item = this.findItemByIdAndUserEmail(id, email);
+        item.setTrashed(false);
+        item = this.itemRepository.save(item);
+        return this.itemMapper.toDto(item);
     }
 }

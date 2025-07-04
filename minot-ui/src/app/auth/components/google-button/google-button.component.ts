@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, inject, NgZone, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../../environments/environment';
 
@@ -19,7 +18,6 @@ declare global {
 export class GoogleButtonComponent implements AfterViewInit {
   private readonly clientId = environment.env.NG_APP_GOOGLE_CLIENT_ID;
   private _authService = inject(AuthService);
-  private _router = inject(Router);
   private _ngZone = inject(NgZone);
   @ViewChild('googleBtn', { static: true })
   googleBtn!: ElementRef<HTMLDivElement>;
@@ -28,7 +26,7 @@ export class GoogleButtonComponent implements AfterViewInit {
     window.google.accounts.id.initialize({
       client_id: this.clientId,
       callback: (res: any) => {
-        // this._ngZone.run(() => this.handleLogin(res.credential));
+        this._ngZone.run(() => this.handleLogin(res.credential));
       },
     });
 
@@ -42,14 +40,14 @@ export class GoogleButtonComponent implements AfterViewInit {
     });
   }
 
-  // handleLogin(googleToken: string) {
-  //   this._authService.googleLogin(googleToken).subscribe({
-  //     next: (res) => {
-  //       this._router.navigate(['/home']);
-  //     },
-  //     error: (err) => {
-  //       console.error(err);
-  //     },
-  //   });
-  // }
+  handleLogin(googleToken: string) {
+    this._authService.googleLogin(googleToken).subscribe({
+      // next: (res) => {
+      //   this._router.navigate(['/home']);
+      // },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 }

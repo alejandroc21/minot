@@ -9,7 +9,9 @@ public interface IItemService {
 
     Page<ItemDTO> filterList(ItemFilter itemFilter, Pageable pageable, String email);
 
-    Boolean sendToTrash(Long id, String email);
+    ItemDTO sendToTrash(Long id, String email);
 
     Boolean delete(Long id, String email);
+
+    ItemDTO restore(Long id, String email);
 }

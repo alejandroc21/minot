@@ -87,9 +87,6 @@ input:focus{
     box-shadow: 0 0 0 2px var(--tw-ring-color);
 }
 
-input[type="password"] {
-    margin-bottom: 0.75rem;
-}
 
 .btn-primary {
     width: 100%;
@@ -122,6 +119,22 @@ input[type="password"] {
     --tw-ring-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow);
     box-shadow: var(--tw-ring-shadow), 0 0 #0000;
     box-shadow: 0 0 0 2px var(--tw-ring-color), 0 0 0 2px var(--tw-ring-offset-color);
+}
+
+.input-password {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.btn-visibility {
+  border: none;
+  background: none;
+  height: 100%;
+  padding: 0 .8rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 
 .footer-links {

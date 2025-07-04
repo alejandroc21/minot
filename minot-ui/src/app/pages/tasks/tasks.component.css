@@ -24,7 +24,6 @@ header {
 }
 
 .page-title {
-  text-align: center;
   font-size: 1.7rem;
 }
 
@@ -84,7 +83,7 @@ header {
 
 .control-select:focus {
   outline: none;
-  border-color: var(--select-color);
+  border-color: var(--primary-color);
 }
 
 .view-toggle {
@@ -107,7 +106,6 @@ header {
     font-variation-settings: "FILL" 1;
   }
 }
-
 
 .control-create {
   display: flex;
@@ -144,7 +142,6 @@ section.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   align-items: start;
-
   gap: 20px;
 }
 

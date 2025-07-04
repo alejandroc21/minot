@@ -35,6 +35,10 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     public TaskDTO update(TaskDTO taskDTO, Long id, String email) {
-        return null;
+        Task task = this.findByIdAndUserEmail(id, email);
+        task.setName(taskDTO.getName());
+        task.setContent(task.getContent());
+        task.setStatus(taskDTO.status());
+        return this.taskMapper.toDto(this.taskRepository.save(task));
     }
 }

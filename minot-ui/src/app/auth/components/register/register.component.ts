@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { GoogleButtonComponent } from '../google-button/google-button.component';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -14,14 +14,9 @@ import { AuthRequest } from '../../model/auth-request';
   styleUrl: './register.component.css',
 })
 export default class RegisterComponent {
-hidePassword: any;
-passwordVisibility() {
-throw new Error('Method not implemented.');
-}
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
-  private _router = inject(Router);
-  public form = this._formBuilder.group(
+  form = this._formBuilder.group(
     {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -30,29 +25,39 @@ throw new Error('Method not implemented.');
     { validators: passwordMatch }
   );
 
-  public register() {
-    if(this.form.valid){
+  hidePassword = true;
+  hideConfirmPassword = true;
+  
+
+  register() {
+    if (this.form.valid) {
       this._authService.register(this.form.value as AuthRequest).subscribe({
-        next:()=>{
-          this._router.navigateByUrl("/home");
+        next: () => {
           this.form.reset();
-        }
-      })
-      
-    }else{
+        },
+      });
+    } else {
       this.form.markAllAsTouched();
     }
   }
 
-  get email(){
+  togglePassword() {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  toggleConfirmPassword(){
+    this.hideConfirmPassword = !this.hideConfirmPassword;
+  }
+
+  get email() {
     return this.form.controls.email;
   }
 
-  get password(){
+  get password() {
     return this.form.controls.password;
   }
 
-  get confirmPassword(){
+  get confirmPassword() {
     return this.form.controls.confirmPassword;
   }
 }

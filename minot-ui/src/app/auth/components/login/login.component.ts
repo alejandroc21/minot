@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { GoogleButtonComponent } from "../google-button/google-button.component";
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
 import { AuthService } from '../../services/auth.service';
@@ -15,18 +15,16 @@ import { AuthRequest } from '../../model/auth-request';
 export default class LoginComponent {
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
-  private _router = inject(Router);
-  public form =this._formBuilder.group({
+  form =this._formBuilder.group({
     email:['', [Validators.required, Validators.email]],
     password:['', Validators.required]
   })
-  public hidePassword = true;
+  hidePassword = true;
 
-  public login(){
+  login(){
     if(this.form.valid){
       this._authService.login(this.form.value as AuthRequest).subscribe({
         next:()=>{
-          this._router.navigateByUrl("/home");
           this.form.reset();
         }
       })
@@ -35,7 +33,7 @@ export default class LoginComponent {
     }
   }
 
-  public togglePassword(){
+  togglePassword(){
     this.hidePassword = !this.hidePassword;
   }
 

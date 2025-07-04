@@ -32,8 +32,13 @@ public class ItemController {
     }
 
     @PostMapping("/trash/{id}")
-    public ResponseEntity<Boolean> sendToTrash(@PathVariable Long id, Principal principal){
+    public ResponseEntity<ItemDTO> sendToTrash(@PathVariable Long id, Principal principal){
         return ResponseEntity.ok(this.iItemService.sendToTrash(id, principal.getName()));
+    }
+
+    @PostMapping("/restore/{id}")
+    public ResponseEntity<ItemDTO> restore(@PathVariable Long id, Principal principal){
+        return ResponseEntity.ok(this.iItemService.restore(id, principal.getName()));
     }
 
     @DeleteMapping("/{id}")

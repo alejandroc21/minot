@@ -6,19 +6,21 @@ import { TokenResponse } from '../model/token-response';
 import { catchError, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { AuthRequest } from '../model/auth-request';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly API_URL = `${environment.env.API_URL}/auth`;
-  private readonly _http = inject(HttpClient);
+  private _http = inject(HttpClient);
+  private _router = inject(Router);
   private _accessTokenExpiration: number | null = null;
   private _accessToken: string | null = null;
   private _toastService = inject(ToastrService);
-  public currentUser = signal<User | null>(null);
+  currentUser = signal<User | null>(null);
 
-  public register(request: AuthRequest) {
+  register(request: AuthRequest) {
     return this._http
       .post<TokenResponse>(`${this.API_URL}/register`, request, {
         withCredentials: true,
@@ -27,12 +29,13 @@ export class AuthService {
         tap((res) => {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
+          this._router.navigateByUrl('/home');
         }),
         catchError(this.handleError)
       );
   }
 
-  public login(request: AuthRequest) {
+  login(request: AuthRequest) {
     return this._http
       .post<TokenResponse>(`${this.API_URL}/login`, request, {
         withCredentials: true,
@@ -41,12 +44,13 @@ export class AuthService {
         tap((res) => {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
+          this._router.navigateByUrl('/home');
         }),
         catchError(this.handleError)
       );
   }
 
-  public googleLogin(googleToken: string) {
+  googleLogin(googleToken: string) {
     return this._http
       .post<TokenResponse>(
         `${this.API_URL}/google-login`,
@@ -57,12 +61,13 @@ export class AuthService {
         tap((res) => {
           this._accessToken = res.token;
           this.setCurrentUser(res.token);
+          this._router.navigateByUrl('/home');
         }),
         catchError(this.handleError)
       );
   }
 
-  public refreshToken() {
+  refreshToken() {
     return this._http
       .post<TokenResponse>(
         this.API_URL + '/refresh',
@@ -81,12 +86,13 @@ export class AuthService {
       );
   }
 
-  public logout() {
+  logout() {
     return this._http
       .post<boolean>(this.API_URL + '/logout', {}, { withCredentials: true })
       .pipe(
         tap(() => {
           this.clearAuthData();
+          this._router.navigateByUrl('/login');
           console.log('Logout successful (server-side)');
         }),
         catchError((err) => {
@@ -97,7 +103,7 @@ export class AuthService {
       );
   }
 
-  public isAuthenticated(): boolean {
+  isAuthenticated(): boolean {
     if (!this._accessToken) {
       return false;
     }

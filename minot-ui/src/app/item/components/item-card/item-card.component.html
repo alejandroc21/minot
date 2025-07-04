@@ -1,0 +1,40 @@
+<div [class]="grid() ? 'card' : 'list'">
+  <div class="header">
+    <div class="icon">
+      @if(isTask()){
+      <span class="material-symbols-outlined"> check_circle </span>
+      }@else {
+      <span class="material-symbols-outlined"> article</span>
+      }
+    </div>
+    <div class="title">
+      {{ item().name }}
+    </div>
+  </div>
+  <div class="preview">
+    {{ item().content }}
+  </div>
+  <div class="meta">
+    <div class="date">{{getRelativeDate()}}</div>
+    @if(isTask()){
+    <div class="tag" [class]="color()">
+      {{ status }}
+    </div>
+    }
+  </div>
+</div>
+
+@if(!trashed){
+<button class="trash" [class]="grid() ? 'square' : 'end'">
+  <span class="material-symbols-outlined"> close </span>
+</button>
+} @else {
+<div class="trashed">
+  <button>
+    <span class="material-symbols-outlined"> delete </span>
+  </button>
+  <button>
+    <span class="material-symbols-outlined"> history </span>
+  </button>
+</div>
+}

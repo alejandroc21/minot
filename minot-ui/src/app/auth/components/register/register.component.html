@@ -35,26 +35,43 @@
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
-        <input
-          formControlName="password"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-        />
-        @if (password.touched && password.invalid) { @if
-        (password.errors?.['required']) {
-        <div class="error">* Ingrese su contraseña</div>
-        } }
+        <div class="input-password">
+
+            <input
+            formControlName="password"
+            [type]="hidePassword ? 'password' : 'text'"
+            name="password"
+            placeholder="••••••••"
+            />
+            <button (click)="togglePassword()" type="button" class="btn-visibility" tabindex="-1">
+                @if (hidePassword) {
+                    <span class="material-symbols-outlined"> visibility_off </span>
+                }@else {
+                    <span class="material-symbols-outlined"> visibility </span>
+                }
+            </button>
+        </div>
       </div>
       <div class="form-group">
         <label for="password-confirm">Confirmar Contraseña</label>
 
-        <input
-          formControlName="confirmPassword"
-          type="password"
-          name="password-confimr"
-          placeholder="••••••••"
-        />
+        <div class="input-password">
+
+            <input
+            formControlName="confirmPassword"
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            name="password-confirm"
+            placeholder="••••••••"
+            />
+            <button (click)="toggleConfirmPassword()" type="button" class="btn-visibility" tabindex="-1">
+                @if (hideConfirmPassword) {
+                    <span class="material-symbols-outlined"> visibility_off </span>
+                }@else {
+                    <span class="material-symbols-outlined"> visibility </span>
+                }
+            </button>
+        </div>
+
         @if (confirmPassword.touched) { @if (password.errors?.['required'] ||
         form.hasError('passwordNotMatch')) {
         <div class="error">* La contraseña no coincide</div>

@@ -1,6 +1,6 @@
 <header>
   <div class="title">
-    <h1 class="page-title">Notas</h1>
+    <h1 class="page-title">Papelera</h1>
     @if (loading()) {
       <div class="uploader-status">
         <mat-spinner diameter="30"></mat-spinner>
@@ -37,17 +37,10 @@
         <span class="material-symbols-outlined"> grid_view </span>
       </button>
     </div>
-    <div class="control-create">
-      <button class="create-btn new-note">
-        <span class="material-symbols-outlined"> add </span>
-        Nota
-      </button>
-    </div>
   </div>
 </header>
-<section #section (scroll)="onScroll($event)" [class]="viewGrid ? 'grid' : 'list'">
-
-  @for (item of notes(); track $index) {
-    <app-item-card [item]="item" [grid]="viewGrid"/>
+<section #section [class]="viewGrid ? 'grid' : 'list'">
+  @for (item of items(); track $index) {
+  <app-item-card [item]="item" [grid]="viewGrid" />
   }
 </section>

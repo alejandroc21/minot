@@ -6,42 +6,43 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ItemCardComponent } from '../../item/components/item-card/item-card.component';
-import { NoteService } from '../../note/services/note.service';
+import { TaskService } from '../../task/services/task.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-notes',
+  selector: 'app-tasks',
   standalone: true,
   imports: [ItemCardComponent, MatProgressSpinnerModule],
-  templateUrl: './notes.component.html',
-  styleUrl: './notes.component.css',
+  templateUrl: './tasks.component.html',
+  styleUrl: './tasks.component.css',
 })
-export default class NotesComponent implements OnInit {
-  private _noteService = inject(NoteService);
-  notes = this._noteService.notes;
+export default class TasksComponent implements OnInit {
+  private _taskService = inject(TaskService);
+  tasks = this._taskService.tasks;
+  loading = this._taskService.loading;
   viewGrid: boolean = true;
-  loading = this._noteService.loading;
   @ViewChild('section') scroll!: ElementRef<HTMLTableSectionElement>;
 
   ngOnInit(): void {
-    this.viewGrid = this._noteService.getDefaultView();
-    this.loadNotes();
+    this.viewGrid = this._taskService.getDefaultView();
+    this.loadTasks();
   }
 
-  loadNotes() {
-    if (this.notes().length === 0) {
-      this._noteService.loadItems().subscribe();
+  loadTasks() {
+    if (this.tasks().length === 0) {
+      this._taskService.loadTasks().subscribe();
     }
+    this._taskService;
   }
 
   showGrid() {
     this.viewGrid = true;
-    this._noteService.setDefaultView(true);
+    this._taskService.setDefaultView(true);
   }
 
   showList() {
     this.viewGrid = false;
-    this._noteService.setDefaultView(false);
+    this._taskService.setDefaultView(false);
   }
 
   onScroll(event: any) {
@@ -49,7 +50,7 @@ export default class NotesComponent implements OnInit {
       return;
     }
 
-    this._noteService.loadNextPage();
+    this._taskService.loadNextPage();
   }
 
   onBottom(event: any) {
