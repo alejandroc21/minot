@@ -1,20 +1,13 @@
-import {
-  Component,
-  inject,
-  input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NoteService } from '../../services/note.service';
 import { Note } from '../../model/note';
 import { Router } from '@angular/router';
-import {
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { debounceTime, Subject } from 'rxjs';
+import { DialogService } from '../../../dialog/services/dialog.service';
 
 @Component({
   selector: 'app-editor',
@@ -26,7 +19,8 @@ import { debounceTime, Subject } from 'rxjs';
 export default class EditorComponent implements OnInit {
   private _noteService = inject(NoteService);
   private _router = inject(Router);
-  private _notes = this._noteService.notes;
+  private _dialogService = inject(DialogService);
+
   loading = this._noteService.loading;
   id = input<number>();
   note = signal<Note | null>(null);
@@ -58,14 +52,12 @@ export default class EditorComponent implements OnInit {
       }
     });
 
-    this.contentChange$
-      .pipe(debounceTime(1000))
-      .subscribe((newContent) => {
-        if (this.note()) {
-          this.note()!.content = newContent;
-          this.updateNote();
-        }
-      });
+    this.contentChange$.pipe(debounceTime(1000)).subscribe((newContent) => {
+      if (this.note()) {
+        this.note()!.content = newContent;
+        this.updateNote();
+      }
+    });
   }
 
   loadNote() {
@@ -101,14 +93,20 @@ export default class EditorComponent implements OnInit {
     }
   }
 
-  sendToTash(){
-    if (this.id() && !isNaN(Number(this.id()))){
-      this._noteService.sendToTrash(this.note()!.id!).subscribe({
-        next:()=>{
-          this.close();
+  sendToTash() {
+    this._dialogService
+      .confirm('¿Estas seguro que quieres mover esta nota a la papelera?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          if (this.id() && !isNaN(Number(this.id()))) {
+            this._noteService.sendToTrash(this.note()!.id!).subscribe({
+              next: () => {
+                this.close();
+              },
+            });
+          }
         }
-      })
-    }
+      });
   }
 
   onTitleChange(value: string): void {

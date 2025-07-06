@@ -84,3 +84,11 @@ label {
 }
 
 
+.cdk-overlay-pane .mat-mdc-dialog-surface {
+  /* background-color: blue; */
+  border-radius: 1rem;
+  color: black;
+  /* font-family: inherit; */
+  font-weight: 600;
+  /* padding: 1rem; */
+}

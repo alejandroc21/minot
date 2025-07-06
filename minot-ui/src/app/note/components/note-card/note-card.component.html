@@ -5,13 +5,11 @@
     </div> -->
     <div class="title">
       <span class="name" [class.default-name]="!note().name">
-
-        {{ note().name || 'Nota sin nombre' }}
+        {{ note().name || "Nota sin nombre" }}
       </span>
     </div>
   </div>
-  <div class="preview">
-    {{ note().content }}
+  <div class="preview" [innerHTML]="getSanitizedPreview()">
   </div>
   <div class="meta">
     <div class="date">{{ getRelativeDate() }}</div>
@@ -21,7 +19,11 @@
 </div>
 
 @if(!trashed){
-<button (click)="sendToTrash()" class="trash" [class]="grid() ? 'square' : 'end'">
+<button
+  (click)="sendToTrash()"
+  class="trash"
+  [class]="grid() ? 'square' : 'end'"
+>
   <span class="material-symbols-outlined"> delete </span>
 </button>
 } @else {

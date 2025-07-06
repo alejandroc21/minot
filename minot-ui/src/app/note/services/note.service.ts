@@ -9,11 +9,12 @@ import {
   retry,
   count,
   delay,
+  firstValueFrom,
 } from 'rxjs';
 import { IPage } from '../../core/model/ipage';
 import { ToastrService } from 'ngx-toastr';
 import { Note } from '../model/note';
-import { TrashService } from '../../trash/services/trash.service';
+import { DialogService } from '../../dialog/services/dialog.service';
 
 @Injectable({
   providedIn: 'root',
@@ -158,6 +159,7 @@ export class NoteService {
     );
   }
 
+
   restoreNote(noteId: number) {
     this._http
       .post<Note>(`${this.API_URL}/restore/${noteId}`, {})
@@ -239,4 +241,5 @@ export class NoteService {
     const value = localStorage.getItem('noteView');
     return value == null ? true : value === 'true';
   }
+
 }

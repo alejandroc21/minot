@@ -2,6 +2,8 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { Note } from '../../model/note';
 import { Router } from '@angular/router';
 import { NoteService } from '../../services/note.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DialogService } from '../../../dialog/services/dialog.service';
 
 @Component({
   selector: 'app-note-card',
@@ -10,12 +12,15 @@ import { NoteService } from '../../services/note.service';
   templateUrl: './note-card.component.html',
   styleUrl: './note-card.component.css',
 })
-export class NoteCardComponent{
+export class NoteCardComponent {
   private _router = inject(Router);
   private _noteService = inject(NoteService);
+  private _sanitizer = inject(DomSanitizer);
+  private _dialogService = inject(DialogService);
+
   grid = input.required<boolean>();
   note = input.required<Note>();
-
+  content = '';
 
   getRelativeDate() {
     const date = this.note().updatedAt!;
@@ -46,25 +51,56 @@ export class NoteCardComponent{
       year: 'numeric',
     });
   }
-  
-  open(){
-    this._router.navigate(['home','editor', this.note().id ])
+
+  open() {
+    this._router.navigate(['home', 'editor', this.note().id]);
   }
 
-  sendToTrash(){
-    this._noteService.sendToTrash(this.note().id!).subscribe();
+  sendToTrash() {
+    this._dialogService
+      .confirm('¿Estas seguro que quieres mover esta nota a la papelera?', 'Enviar a papelera')
+      .subscribe((confirmed) => {
+        if(confirmed){
+          this._noteService.sendToTrash(this.note().id!).subscribe();
+        }
+      });
   }
 
-  delete(){
-    this._noteService.deleteNote(this.note().id!);
+  delete() {
+    this._dialogService
+      .confirm('¿Estas seguro que quieres eliminar permanentemente esta nota?', 'Elimiar nota')
+      .subscribe((confirmed) => {
+        if(confirmed){
+          this._noteService.deleteNote(this.note().id!);
+        }
+      });
   }
 
-  restore(){
-    this._noteService.restoreNote(this.note().id!);
+  restore() {
+    this._dialogService
+      .confirm('¿Estas seguro que quieres recuperar esta nota?', 'Restaurar nota')
+      .subscribe((confirmed) => {
+        if(confirmed){
+          this._noteService.restoreNote(this.note().id!);
+        }
+      });
+  }
+
+  getTextPreview(html: string, limit: number = 100): string {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    const text = div.textContent || div.innerText || '';
+    return text.length > limit ? text.substring(0, limit) + '...' : text;
+  }
+
+  getSanitizedPreview(): SafeHtml {
+    if (this.note().content) {
+      return this._sanitizer.bypassSecurityTrustHtml(this.note().content!);
+    }
+    return '';
   }
 
   get trashed() {
     return this.note().trashed!;
   }
-
 }

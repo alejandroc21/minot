@@ -1,0 +1,41 @@
+button{
+    border: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.cancel{
+    background-color: #e5469d;
+}
+
+button:hover{
+    transform: scale(1.07);
+}
+
+.title{
+    justify-content: center;
+    justify-items: center;
+}
+
+p{
+    padding-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+h2, p{
+    user-select: none;
+    user-select: none;
+}
+
+
+.options{
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
