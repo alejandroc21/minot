@@ -1,0 +1,158 @@
+<div class="document-container">
+  <div class="document-header">
+    <input
+      type="text"
+      [disabled]="note() == null"
+      [ngModel]="note()?.name || ''"
+      (ngModelChange)="onTitleChange($event)"
+      class="document-title-input"
+      placeholder="Nota sin nombre"
+    />
+
+    <div>
+      <button class="close" (click)="close()">
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+    </div>
+  </div>
+
+  <div class="editor-wrapper">
+    <quill-editor
+      [disabled]="!note()"
+      [styles]="{ height: '400px' }"
+      [modules]="quillConfig.modules"
+      [placeholder]="quillConfig.placeholder"
+      (ngModelChange)="onEditorContentChange($event)"
+      [ngModel]="note()?.content || ''"
+    >
+      <div quill-editor-toolbar>
+        <div id="custom-toolbar" class="custom-toolbar">
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <button class="ql-bold" title="Bold"></button>
+              <button class="ql-italic" title="Italic"></button>
+              <button class="ql-underline" title="Underline"></button>
+              <button class="ql-strike" title="Strike"></button>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <select class="ql-font" title="Font Family">
+                <option selected></option>
+                <option value="serif">Serif</option>
+                <option value="monospace">Monospace</option>
+              </select>
+              <select class="ql-size" title="Size">
+                <option value="small">Small</option>
+                <option selected>Normal</option>
+                <option value="large">Large</option>
+                <option value="huge">Huge</option>
+              </select>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <select class="ql-align" title="Text Alignment">
+                <option selected></option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
+                <option value="justify">Justify</option>
+              </select>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <button
+                class="ql-list"
+                value="ordered"
+                title="Numbered List"
+              ></button>
+              <button
+                class="ql-list"
+                value="bullet"
+                title="Bullet List"
+              ></button>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <select class="ql-header" title="Header">
+                <option selected></option>
+                <option value="1">Header 1</option>
+                <option value="2">Header 2</option>
+                <option value="3">Header 3</option>
+              </select>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <span class="ql-formats">
+              <select class="ql-color" title="Text Color"></select>
+              <select class="ql-background" title="Background Color"></select>
+            </span>
+          </div>
+
+          <div class="toolbar-section">
+            <div class="ql-formats">
+              <button class="ql-code-block" title="Code Block"></button>
+            </div>
+          </div>
+
+          <div class="toolbar-section custom-actions">
+            <button
+              type="button"
+              class="custom-btn"
+              (click)="sendToTash()"
+              title="Eliminar nota"
+            >
+              <span class="material-symbols-outlined"> delete </span>
+            </button>
+          </div>
+          <div class="toolbar-section custom-actions">
+            @if (loading() && note() === null) {
+            <div class="uploader-status">
+              <mat-spinner diameter="30"></mat-spinner>
+            </div>
+            } @if (note() === null && !loading()) {
+            <button title="reintentar" (click)="retry()">
+              <span class="material-symbols-outlined"> refresh </span>
+            </button>
+            }@else {
+            <button
+              type="button"
+              style="cursor: default"
+              class="custom-btn"
+              [title]="!loading() ? 'Guardando' : 'Guardado'"
+            >
+              <span
+                [class.saved]="saved"
+                class="material-symbols-outlined"
+              >
+                cloud_done
+              </span>
+            </button>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional content above editor if needed -->
+      <!-- <div above-quill-editor-toolbar>
+        <div class="editor-metadata">
+          <span class="last-saved">Last saved: </span>
+        </div>
+      </div> -->
+
+      <!-- Additional content below toolbar if needed -->
+      <!-- <div below-quill-editor-toolbar>
+        <div class="editor-info">
+          <span class="word-count">Words: {{editorContent.length}}</span>
+        </div>
+      </div> -->
+    </quill-editor>
+  </div>
+</div>

@@ -38,7 +38,7 @@
       </button>
     </div>
     <div class="control-create">
-      <button class="create-btn new-note">
+      <button (click)="createNote()" class="create-btn new-note">
         <span class="material-symbols-outlined"> add </span>
         Nota
       </button>
@@ -47,7 +47,7 @@
 </header>
 <section #section (scroll)="onScroll($event)" [class]="viewGrid ? 'grid' : 'list'">
 
-  @for (item of notes(); track $index) {
-    <app-item-card [item]="item" [grid]="viewGrid"/>
+  @for (note of notes(); track $index) {
+  <app-note-card [note]="note" [grid]="viewGrid"/>
   }
 </section>

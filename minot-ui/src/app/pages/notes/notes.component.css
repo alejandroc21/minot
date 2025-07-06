@@ -144,7 +144,7 @@ section.grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   align-items: start;
-
+  align-content: start;
   gap: 20px;
 }
 

@@ -40,12 +40,13 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/webjars/**"
+                                ,"/error"
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(ex->ex
                         .authenticationEntryPoint((request, response, authException) -> {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                 })
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN);

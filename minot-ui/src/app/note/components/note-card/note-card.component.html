@@ -1,0 +1,36 @@
+<div [class]="grid() ? 'card' : 'list'" (click)="open()">
+  <div class="header">
+    <!-- <div class="icon">
+      <span class="material-symbols-outlined"> check_circle </span>
+    </div> -->
+    <div class="title">
+      <span class="name" [class.default-name]="!note().name">
+
+        {{ note().name || 'Nota sin nombre' }}
+      </span>
+    </div>
+  </div>
+  <div class="preview">
+    {{ note().content }}
+  </div>
+  <div class="meta">
+    <div class="date">{{ getRelativeDate() }}</div>
+
+    <!-- <div class="tag">tema</div> -->
+  </div>
+</div>
+
+@if(!trashed){
+<button (click)="sendToTrash()" class="trash" [class]="grid() ? 'square' : 'end'">
+  <span class="material-symbols-outlined"> delete </span>
+</button>
+} @else {
+<div class="trashed">
+  <button (click)="delete()">
+    <span class="material-symbols-outlined"> delete </span>
+  </button>
+  <button (click)="restore()">
+    <span class="material-symbols-outlined"> history </span>
+  </button>
+</div>
+}

@@ -5,52 +5,64 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ItemService } from '../../item/services/item.service';
-import { ItemCardComponent } from '../../item/components/item-card/item-card.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TrashService } from '../../trash/services/trash.service';
+import { NoteCardComponent } from '../../note/components/note-card/note-card.component';
+import { NoteService } from '../../note/services/note.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-trash',
   standalone: true,
-  imports: [ItemCardComponent, MatProgressSpinnerModule],
+  imports: [NoteCardComponent, MatProgressSpinnerModule, FormsModule, CommonModule],
   templateUrl: './trash.component.html',
   styleUrl: './trash.component.css',
 })
 export default class TrashComponent implements OnInit {
-  private _itemService = inject(ItemService);
-  items = this._itemService.items;
-  loading = this._itemService.loading;
-  viewGrid = true;
-
-  ngOnInit() {
-    this.viewGrid = this._itemService.getViewPreference('trash');
-    this._itemService.updateFilter({
-      trashed: true
-    });
-  }
-
-  showGrid() {
-    this._itemService.setViewPreference('trash', true);
-    this.viewGrid = true;
-  }
-
-  showList() {
-    this._itemService.setViewPreference('trash', false);
-    this.viewGrid = false;
-  }
-
-  onScroll(event: any) {
-    if (!this.onBottom(event)) {
-      return;
+  private _noteService = inject(TrashService);
+  private _note = inject(NoteService);
+    notes = this._noteService.notes;
+    viewGrid: boolean = true;
+    loading = this._noteService.loading;
+    @ViewChild('section') scroll!: ElementRef<HTMLTableSectionElement>;
+  
+    ngOnInit(): void {
+      this.viewGrid = this._noteService.getDefaultView();
+      this.loadNotes();
+    }
+  
+    loadNotes() {
+      if (!this._note.firstLoadTrash) {
+        this._noteService.loadItems().subscribe();
+      }
+    }
+  
+    showGrid() {
+      this.viewGrid = true;
+      this._noteService.setDefaultView(true);
+    }
+  
+    showList() {
+      this.viewGrid = false;
+      this._noteService.setDefaultView(false);
+    }
+  
+    onScroll(event: any) {
+      if (!this.onBottom(event)) {
+        return;
+      }
+  
+      this._noteService.loadNextPage();
+    }
+  
+    onBottom(event: any) {
+      const tracker = event.target;
+      const limit = tracker.scrollHeight - tracker.clientHeight;
+      return tracker.scrollTop === limit;
     }
 
-    this._itemService.loadNextPage();
-  }
-
-  onBottom(event: any) {
-    const tracker = event.target;
-    const limit = tracker.scrollHeight - tracker.clientHeight;
-    return tracker.scrollTop === limit;
-  }
+    onTextChange(value:string){
+        console.log(value);
+    }
 }

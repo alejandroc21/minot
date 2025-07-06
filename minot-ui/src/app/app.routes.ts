@@ -25,20 +25,17 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./pages/home/home.component'),
     children:[
-      // {
-      //   path: 'items', loadComponent: ()=>import('./pages/items/items.component')
-      // },
       {
         path: 'notes', loadComponent: ()=>import('./pages/notes/notes.component')
-      },
-      {
-        path: 'tasks', loadComponent: ()=>import('./pages/tasks/tasks.component')
       },
       {
         path: 'trash', loadComponent: ()=>import('./pages/trash/trash.component')
       },
       {
         path: 'config', loadComponent: ()=>import('./pages/config/config.component')
+      },
+      {
+        path: 'editor/:id', loadComponent: ()=>import('./note/components/editor/editor.component')
       },
       {
         path: '**', redirectTo: 'notes', pathMatch: 'full'

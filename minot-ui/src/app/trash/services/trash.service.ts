@@ -3,27 +3,26 @@ import { inject, Injectable, signal } from '@angular/core';
 import { tap, finalize, catchError, throwError, retry } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { IPage } from '../../core/model/ipage';
-import { Item, ItemType } from '../../item/model/item';
 import { ToastrService } from 'ngx-toastr';
+import { Note } from '../../note/model/note';
+import { NoteService } from '../../note/services/note.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrashService {
-  private readonly API_URL = `${environment.env.API_URL}/items`;
+  private readonly API_URL = `${environment.env.API_URL}/notes`;
   private _http = inject(HttpClient);
   private _toastService = inject(ToastrService);
+  private _noteService = inject(NoteService);
 
-  items = signal<Item[]>([]);
-  tasks = signal<Item[]>([]);
-  notes = signal<Item[]>([]);
+  notes = this._noteService.trashNotes;
   loading = signal(false);
 
   totalElemnts = signal(0);
   pageSize = signal(20);
   currentPage = signal(0);
 
-  typeFilter = signal<ItemType[]>([]);
   textFilter = signal<string>('');
   trashedFilter = signal<boolean | undefined>(undefined);
 
@@ -32,19 +31,28 @@ export class TrashService {
       .set('sort', 'id,desc')
       .set('page', this.currentPage())
       .set('size', 20)
-      .set('type', this.typeFilter().join(','))
       .set('text', this.textFilter() || '')
-      .set('trashed', this.trashedFilter()?.toString() || '');
+      .set('trashed', 'true');
     this.loading.set(true);
-    return this._http.get<IPage<Item>>(this.API_URL, { params }).pipe(
+    return this._http.get<IPage<Note>>(this.API_URL, { params }).pipe(
       retry({
               count: 3,
               delay: 1000,
             }),
       tap((res) => {
-        this.items.update((items) => items.concat(res.content));
+        if(this._noteService.firstLoadTrash){
+          // this.notes.update((notes) => notes.concat(res.content));
+          this.notes.update((notes)=>{
+            const idExists = new Set(notes.map(n => n.id));
+            const newNotes = res.content.filter(n => !idExists.has(n.id));
+            return notes.concat(newNotes);
+          })
+        }else{
+          this.notes.set(res.content);
+        }
 
         this.totalElemnts.set(res.totalElements);
+        this._noteService.firstLoadTrash = true;
       }),
       catchError((err) => {
               this._toastService.error('No pudimos obtener las elementos eliminados', 'Error');
@@ -57,7 +65,7 @@ export class TrashService {
   }
 
   loadNextPage() {
-    if (this.totalElemnts() <= this.items().length) {
+    if (this.totalElemnts() <= this.notes().length) {
       return;
     }
     this.currentPage.update((c) => c + 1);

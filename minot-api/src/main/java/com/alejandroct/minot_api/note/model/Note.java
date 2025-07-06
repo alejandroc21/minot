@@ -1,22 +1,46 @@
 package com.alejandroct.minot_api.note.model;
 
-import com.alejandroct.minot_api.item.model.Item;
-import com.alejandroct.minot_api.user.model.User;
+import com.alejandroct.minot_api.category.model.Category;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import com.alejandroct.minot_api.user.model.User;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@EqualsAndHashCode(callSuper = true)
+import java.time.LocalDateTime;
+
 @Data
-@SuperBuilder
 @Entity
 @NoArgsConstructor
-@DiscriminatorValue("NOTE")
-public class Note extends Item {
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+public class Note{
 
-    public Note(Long id, String name, String content, boolean deleted, User user) {
-        super(id, name,content, deleted, user);
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    private boolean trashed;
+
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    private Category category;
+
+    @ManyToOne(optional = false)
+    private User user;
 }

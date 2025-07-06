@@ -5,19 +5,22 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ItemCardComponent } from '../../item/components/item-card/item-card.component';
 import { NoteService } from '../../note/services/note.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoteCardComponent } from "../../note/components/note-card/note-card.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notes',
   standalone: true,
-  imports: [ItemCardComponent, MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, NoteCardComponent],
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css',
 })
 export default class NotesComponent implements OnInit {
   private _noteService = inject(NoteService);
+  private _router = inject(Router);
+
   notes = this._noteService.notes;
   viewGrid: boolean = true;
   loading = this._noteService.loading;
@@ -29,9 +32,17 @@ export default class NotesComponent implements OnInit {
   }
 
   loadNotes() {
-    if (this.notes().length === 0) {
+    if (!this._noteService.firstLoadNote) {
       this._noteService.loadItems().subscribe();
     }
+  }
+
+  createNote(){
+    this._noteService.saveNote({}).subscribe({
+      next:(res)=>{
+            this._router.navigate(['home','editor', res.id ]);
+      }
+    })
   }
 
   showGrid() {

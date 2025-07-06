@@ -10,7 +10,7 @@
   <div class="control-bar">
     <div class="search-box">
       <span class="material-symbols-outlined search-icon"> search </span>
-      <input type="text" class="search-input" placeholder="Buscar notas" />
+      <input [ngModel]="" (ngModelChange)="onTextChange($event)" type="text" class="search-input" placeholder="Buscar notas" />
     </div>
     <!-- <div class="sort-direction">
       <button (click)="toggleSort()" [class.rotate]="sortAsc">
@@ -40,7 +40,7 @@
   </div>
 </header>
 <section #section [class]="viewGrid ? 'grid' : 'list'">
-  @for (item of items(); track $index) {
-  <app-item-card [item]="item" [grid]="viewGrid" />
+  @for (note of notes(); track $index) {
+  <app-note-card [note]="note" [grid]="viewGrid"/>
   }
 </section>

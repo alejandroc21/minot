@@ -2,7 +2,6 @@ package com.alejandroct.minot_api.note.mapper;
 
 import com.alejandroct.minot_api.note.dto.NoteDTO;
 import com.alejandroct.minot_api.note.model.Note;
-import com.alejandroct.minot_api.task.model.Status;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -14,14 +13,15 @@ class NoteMapperTest {
 
     @Test
     void toEntity() {
-        Note note = this.noteMapper.toEntity(new NoteDTO(1L, "test", "test", false, null, null,null));
+        Note note = this.noteMapper.toEntity(new NoteDTO(1L, "test", "test", false, null, null, null));
         assertInstanceOf(Note.class, note);
     }
 
     @Test
     void toDto() {
-        Note note = new Note(1L , "test", "test", false, null);
+        Note note = new Note(1L , "test", "test", false, null,null,null, null);
         NoteDTO noteDTO = this.noteMapper.toDto(note);
+        System.out.println(noteDTO);
         assertInstanceOf(NoteDTO.class, noteDTO);
     }
 }
